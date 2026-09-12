@@ -6,6 +6,8 @@
   <meta name="description" content="Kurdana — پلاتفۆرمی زمان، ئەدەبیات، فەرهەنگ و Zhir">
   <title>Kurdana | زانین بۆ جیهانێکی باشتر</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="modulepreload" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/6.3.289/pdf.min.mjs">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 </head>
 <body>
 
@@ -184,6 +186,7 @@
                 <span>کتێب</span><span>PDF</span><span>توێژینەوە</span>
               </div>
               <button class="card-action" data-demo="library">بینینی کتێبخانە ←</button>
+              <button class="card-action reader-launch" type="button">خوێندنەوەی PDF ↗</button>
             </div>
           </article>
         </div>
@@ -202,11 +205,11 @@
         </div>
 
         <div class="books-scroller" id="booksScroller">
-          <article class="book-card"><div class="book-cover cover-mountain">کۆمەڵە<br>وتار</div><div class="book-meta"><strong>مێژووی کورد</strong><span>عەبدوللە عبدولڕەحمان</span><em>مێژوو</em></div></article>
+          <article class="book-card"><div class="book-cover cover-mountain">کۆمەڵە<br>وتار</div><div class="book-meta"><strong>مێژووی کورد</strong><span>عەبدوللە عبدولڕەحمان</span><em>مێژوو</em><button class="book-read-btn reader-launch" type="button">خوێندنەوە</button></div></article>
           <article class="book-card"><div class="book-cover cover-sky">ڕێزمانی<br>کوردی</div><div class="book-meta"><strong>ڕێزمانی کوردی</strong><span>تیراژێکی مەستەفا</span><em>زمان</em></div></article>
           <article class="book-card"><div class="book-cover cover-tree">شارى<br>خەیاڵ</div><div class="book-meta"><strong>شاری خەیاڵ</strong><span>بەختیار عەلی</span><em>ڕۆمان</em></div></article>
           <article class="book-card"><div class="book-cover cover-space">فەلسەفەی<br>زمان</div><div class="book-meta"><strong>فەلسەفەی زمان</strong><span>نەریمان عەبدوڵڵا</span><em>فەلسەفە</em></div></article>
-          <article class="book-card"><div class="book-cover cover-desert">کوردستان<br>مێژوو</div><div class="book-meta"><strong>کوردستان</strong><span>مارتن فان برۆیڵن</span><em>مێژوو</em></div></article>
+          <article class="book-card"><div class="book-cover cover-desert">کوردستان<br>مێژوو</div><div class="book-meta"><strong>کوردستان</strong><span>مارتن فان برۆیڵن</span><em>مێژوو</em><button class="book-read-btn reader-launch" type="button">خوێندنەوە</button></div></article>
           <article class="book-card"><div class="book-cover cover-night">ڕۆژنامەی<br>پەخش</div><div class="book-meta"><strong>ڕۆژنامەی پەخش</strong><span>بەختیار عەلی</span><em>ڕۆمان</em></div></article>
         </div>
       </section>
@@ -390,8 +393,68 @@
     </form>
   </aside>
 
+
+  <!-- PDF Reader Modal -->
+  <div class="reader-overlay" id="readerModal" aria-hidden="true">
+    <section class="reader-modal" role="dialog" aria-modal="true" aria-labelledby="readerTitle">
+      <header class="reader-toolbar">
+        <div class="reader-title-wrap">
+          <div class="reader-symbol">▤</div>
+          <div>
+            <div class="eyebrow">KURDANA READER</div>
+            <h2 id="readerTitle">خوێنەری کتێب</h2>
+            <div class="reader-file-name" id="readerFileName">هیچ PDF ـێک هەڵنەبژێردراوە</div>
+          </div>
+        </div>
+        <div class="reader-toolbar-actions">
+          <label class="reader-file-btn">
+            <input id="readerFileInput" type="file" accept="application/pdf,.pdf">
+            هەڵبژاردنی PDF
+          </label>
+          <button class="reader-icon-btn" id="readerZoomOut" type="button" aria-label="کەمکردنی زووم">−</button>
+          <button class="reader-zoom-value" id="readerZoomValue" type="button">100%</button>
+          <button class="reader-icon-btn" id="readerZoomIn" type="button" aria-label="زیادکردنی زووم">+</button>
+          <button class="reader-close-btn" id="readerClose" type="button" aria-label="داخستن">×</button>
+        </div>
+      </header>
+
+      <div class="reader-body">
+        <button class="reader-nav reader-prev" id="readerPrev" type="button" aria-label="لاپەڕەی پێشوو">‹</button>
+
+        <div class="reader-stage">
+          <div class="reader-empty" id="readerEmpty">
+            <div class="reader-empty-icon">PDF</div>
+            <h3>کتێبەکەت بخوێنەوە لە Kurdana</h3>
+            <p>فایلی PDF ـەکەت هەڵبژێرە. لاپەڕەکە لەسەر Canvas ـی خوێنەر نیشان دەدرێت.</p>
+            <label class="primary-btn reader-select-label">
+              هەڵبژاردنی فایل
+              <input id="readerEmptyFileInput" type="file" accept="application/pdf,.pdf">
+            </label>
+          </div>
+
+          <canvas id="pdfCanvas" aria-label="لاپەڕەی PDF"></canvas>
+          <div class="reader-loading" id="readerLoading" hidden>کتێبەکە دەکرێتەوە...</div>
+        </div>
+
+        <button class="reader-nav reader-next" id="readerNext" type="button" aria-label="لاپەڕەی دواتر">›</button>
+      </div>
+
+      <footer class="reader-footer">
+        <div class="reader-page-indicator">
+          <span id="readerPageCurrent">0</span>
+          <span>/</span>
+          <span id="readerPageTotal">0</span>
+        </div>
+        <button class="ghost-btn" id="readerFit" type="button">گونجاندن بۆ شاشە</button>
+        <span class="reader-tip">کلیلەکانی ← → بۆ گۆڕینی لاپەڕە بەکاردێنە.</span>
+      </footer>
+    </section>
+  </div>
+
   <div class="toast" id="toast" role="status"></div>
 
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
+  <script type="module" src="reader.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
