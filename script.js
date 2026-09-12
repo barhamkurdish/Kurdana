@@ -9,7 +9,8 @@
   };
 
   const toast = (message) => {
-    const el = $("#toast");
+    const el = document.querySelector("#toast");
+    if (!el) return;
     el.textContent = message;
     el.classList.add("show");
     clearTimeout(window.__toastTimer);
@@ -29,91 +30,14 @@
     if (!modal) return;
     modal.classList.remove("show");
     modal.setAttribute("aria-hidden", "true");
-    if (!$$(".modal-layer.show").length && !$("#zhirDrawer").classList.contains("show")) {
+    if (!document.querySelector(".modal-layer.show") && !document.querySelector("#zhirDrawer.show")) {
       document.body.classList.remove("modal-open");
     }
   };
 
-  // Theme
-  const savedTheme = localStorage.getItem(storageKeys.theme);
-  if (savedTheme === "dark") document.body.classList.add("dark");
-
-  $("#themeToggle").addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-    localStorage.setItem(storageKeys.theme, document.body.classList.contains("dark") ? "dark" : "light");
-  });
-
-  // Mobile sidebar
-  const sidebar = $("#sidebar");
-  const overlay = $("#mobileOverlay");
-
-  const closeSidebar = () => {
-    sidebar.classList.remove("open");
-    overlay.classList.remove("show");
+  window.KurdanaCore = {
+    $, $$, toast, storageKeys, openModal, closeModal
   };
-
-  $("#mobileMenu").addEventListener("click", () => {
-    sidebar.classList.add("open");
-    overlay.classList.add("show");
-  });
-
-  $("#mobileClose").addEventListener("click", closeSidebar);
-  overlay.addEventListener("click", closeSidebar);
-
-  $$("[data-scroll]").forEach((link) => {
-    link.addEventListener("click", () => {
-      closeSidebar();
-      $$(".side-link").forEach((el) => el.classList.remove("active"));
-      link.classList.add("active");
-    });
-  });
-
-  $$("[data-scroll-target]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const target = btn.dataset.scrollTarget;
-      document.querySelector(target)?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  });
-
-  // Language menu
-  $("#languageMain").addEventListener("click", () => $("#languageMenu").classList.toggle("show"));
-
-  $$("#languageMenu button").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const labels = { ku: "کوردی", en: "English", ar: "العربية" };
-      $("#languageMain span:first-child").textContent = labels[btn.dataset.lang];
-      $("#languageMenu").classList.remove("show");
-      toast(`زمان: ${labels[btn.dataset.lang]}`);
-    });
-  });
-
-  // Auth / profile
-  $("#openProfile").addEventListener("click", () => openModal("profileModal"));
-  $("#topProfile").addEventListener("click", () => {
-    const profile = loadProfile();
-    if (profile) updateProfileUI(profile);
-    openModal(profile ? "profileModal" : "authModal");
-  });
-
-  $$(".modal-x").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const id = btn.dataset.closeModal;
-      if (id) closeModal(id);
-    });
-  });
-
-  $$(".modal-layer").forEach(layer => {
-    layer.addEventListener("click", (event) => {
-      if (event.target === layer) closeModal(layer.id);
-    });
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape") return;
-    $$(".modal-layer.show").forEach(m => closeModal(m.id));
-    if ($("#zhirDrawer").classList.contains("show")) closeZhir();
-    closeSidebar();
-  });
 
   // Registration
   $$(".auth-tab").forEach(tab => {
@@ -177,7 +101,6 @@
     toast("پڕۆفایلەکەت بە سەرکەوتوویی دروست کرا.");
     openModal("profileModal");
   });
-
   // Publish
   $("#openPublish").addEventListener("click", () => openModal("publishModal"));
   $("#communityPublish").addEventListener("click", () => openModal("publishModal"));
@@ -283,7 +206,6 @@
       toast(map[btn.dataset.demo] || "بەشەکە لە قۆناغی دواتردا فراوان دەکرێت.");
     });
   });
-
   // Zhir
   const zhirDrawer = $("#zhirDrawer");
   const zhirMessages = $("#zhirMessages");
@@ -342,17 +264,9 @@
     });
   });
 
-  // Notifications / bookmarks / settings demo
-  $("#openNotifications").addEventListener("click", () => toast("هیچ ئاگادارییەکی نوێ نییە."));
-  $("#openBookmarks").addEventListener("click", () => toast("نیشانکراوەکان لە قۆناغی هەژماری دواتردا چالاک دەکرێن."));
-  $("#openSettings").addEventListener("click", () => toast("ڕێکخستنە سەرەکییەکان: دۆخی ڕوون/تاریک و زمان."));
-
-  // Initial profile
-  const existing = loadProfile();
-  if (existing) updateProfileUI(existing);
-
-  // Close language menu when clicking elsewhere
-  document.addEventListener("click", (event) => {
-    if (!event.target.closest(".language-switcher")) $("#languageMenu").classList.remove("show");
-  });
+  // Export the data/utility functions for app.js.
+  window.KurdanaCore.loadProfile = loadProfile;
+  window.KurdanaCore.updateProfileUI = updateProfileUI;
+  window.KurdanaCore.loadPosts = loadPosts;
+  window.KurdanaCore.normalizeKurdishText = normalizeKurdishText;
 })();
