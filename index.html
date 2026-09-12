@@ -1,203 +1,397 @@
 <!DOCTYPE html>
 <html lang="ku" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kurdana | کوردانا</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kurdana — پلاتفۆرمی زمان، ئەدەبیات، فەرهەنگ و Zhir">
+  <title>Kurdana | زانین بۆ جیهانێکی باشتر</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="header">
-    <div class="container header-content">
-        <a href="#" class="logo">
-            <span class="logo-mark">K</span>
-            <span class="logo-text">Kurdana</span>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="سایدبار">
+      <div class="brand">
+        <div class="brand-mark">✥</div>
+        <div>
+          <div class="brand-name">Kurdana</div>
+          <div class="brand-tagline">زانین بۆ جیهانێکی باشتر</div>
+        </div>
+      </div>
+
+      <button class="mobile-close" id="mobileClose" aria-label="داخستن">×</button>
+
+      <nav class="side-nav">
+        <div class="nav-label">ناوەڕۆک</div>
+        <a class="side-link active" href="#home" data-scroll>
+          <span class="side-icon">⌂</span><span>سەرەکی</span>
+        </a>
+        <a class="side-link" href="#language" data-scroll>
+          <span class="side-icon">▣</span><span>زمان و ڕێزمان</span>
+        </a>
+        <a class="side-link" href="#literature" data-scroll>
+          <span class="side-icon">❧</span><span>ئەدەبیات</span>
+        </a>
+        <a class="side-link" href="#dictionary" data-scroll>
+          <span class="side-icon">✤</span><span>فەرهەنگ</span>
+        </a>
+        <a class="side-link" href="#library" data-scroll>
+          <span class="side-icon">▤</span><span>کتێبخانە</span>
+        </a>
+        <a class="side-link" href="#zhir" data-scroll>
+          <span class="side-icon">◉</span><span>Zhir</span>
+        </a>
+        <button class="side-link side-button" id="openPublish">
+          <span class="side-icon">✎</span><span>بڵاوکردنەوە</span>
+        </button>
+        <a class="side-link" href="#community" data-scroll>
+          <span class="side-icon">♧</span><span>کۆمەڵگە</span>
         </a>
 
-        <nav class="navigation">
-            <a href="#home" class="nav-link active">سەرەکی</a>
-            <a href="#language" class="nav-link">زمان و ڕێزمان</a>
-            <a href="#literature" class="nav-link">ئەدەبیات</a>
-            <a href="#zhir" class="nav-link">Zhir</a>
-        </nav>
+        <div class="nav-divider"></div>
+        <div class="nav-label">هەژمار</div>
+        <button class="side-link side-button" id="openProfile">
+          <span class="side-icon">◌</span><span>پڕۆفایلم</span>
+        </button>
+        <button class="side-link side-button" id="openNotifications">
+          <span class="side-icon">♢</span><span>ئاگادارییەکان</span><span class="notify-dot" title="نوێ"></span>
+        </button>
+        <button class="side-link side-button" id="openBookmarks">
+          <span class="side-icon">☆</span><span>نیشانکراوەکان</span>
+        </button>
+        <button class="side-link side-button" id="openSettings">
+          <span class="side-icon">⚙</span><span>ڕێکخستنەکان</span>
+        </button>
+      </nav>
 
-        <div class="header-actions">
-            <button class="profile-button" type="button">پڕۆفایل</button>
-            <button class="register-button" id="openRegister" type="button">خۆتۆمارکردن</button>
+      <div class="sidebar-bottom">
+        <div class="language-switcher">
+          <button class="language-main" id="languageMain" type="button">
+            <span>کوردی</span><span>⌄</span>
+          </button>
+          <div class="language-menu" id="languageMenu">
+            <button data-lang="ku">کوردی</button>
+            <button data-lang="en">English</button>
+            <button data-lang="ar">العربية</button>
+          </div>
         </div>
+        <div class="sidebar-quote">
+          <div class="quote-mark">“</div>
+          <p>هەر کتێبێک کەمێک بەرەو زانیاتر.</p>
+          <small>— مەلا مستەفا بارزانی</small>
+        </div>
+      </div>
+    </aside>
+
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn menu-btn" id="mobileMenu" aria-label="مێنیو">☰</button>
+          <div class="breadcrumbs">Kurdana <span>/</span> <strong>سەرەکی</strong></div>
+        </div>
+
+        <div class="top-actions">
+          <button class="icon-btn" id="themeToggle" aria-label="دۆخی تاریک / ڕوون">◐</button>
+          <button class="profile-chip" id="topProfile">
+            <span class="avatar">K</span>
+            <span class="profile-chip-text">چوونەژوورەوە</span>
+            <span class="profile-chevron">⌄</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="hero-section" id="home">
+        <div class="hero-bg-orb hero-orb-1"></div>
+        <div class="hero-bg-orb hero-orb-2"></div>
+        <div class="hero-content">
+          <div class="hero-kicker">پلاتفۆرمی کوردی بۆ زانین و خوێندنەوە</div>
+          <h1>زانین<br><span>ڕێگایەکی گەشەیە</span></h1>
+          <p class="hero-subtitle">Kurdana، شوێنێک بۆ زمان، ئەدەبیات، فەرهەنگ و ژیریی دەستکردی کوردی.</p>
+
+          <div class="hero-quote">«کوردستان هەر دەمێنێت لە کۆمەڵێک کتێبە»</div>
+
+          <form class="smart-search" id="searchForm">
+            <span class="search-icon">⌕</span>
+            <input id="globalSearch" type="search" placeholder="چی دەگەڕێیت؟" autocomplete="off">
+            <button type="submit">گەڕان</button>
+          </form>
+
+          <div class="quick-filters" id="quickFilters">
+            <button data-filter="کتێب">کتێب</button>
+            <button data-filter="وشە">وشە</button>
+            <button data-filter="وتار">وتار</button>
+            <button data-filter="نووسەر">نووسەر</button>
+            <button data-filter="شیعر">شیعر</button>
+            <button data-filter="Zhir">Zhir</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-wrap" id="language">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">بەشە سەرەکییەکان</div>
+            <h2>جیهانی Kurdana</h2>
+          </div>
+          <button class="ghost-link" data-scroll-target="#community">بینینی هەموو ←</button>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card feature-language">
+            <div class="card-art">▥</div>
+            <div class="feature-copy">
+              <div class="feature-title-row"><span class="feature-icon">▣</span><h3>زمان و ڕێزمان</h3></div>
+              <p>زمانەوانی، ڕێزمان، ڕێنووس و وشەسازی لە یەک شوێن.</p>
+              <div class="feature-tags">
+                <span>زمانەوانی</span><span>ڕێزمان</span><span>وشەسازی</span>
+              </div>
+              <button class="card-action" data-demo="language">بینینی بەشەکە ←</button>
+            </div>
+          </article>
+
+          <article class="feature-card feature-literature" id="literature">
+            <div class="card-art">❧</div>
+            <div class="feature-copy">
+              <div class="feature-title-row"><span class="feature-icon">❧</span><h3>ئەدەبیات</h3></div>
+              <p>شیعر، پەخشان، ڕۆمان، چیرۆک و وتاری کوردی.</p>
+              <div class="feature-tags">
+                <span>شیعر</span><span>ڕۆمان</span><span>چیرۆک</span>
+              </div>
+              <button class="card-action" data-demo="literature">بینینی بەشەکە ←</button>
+            </div>
+          </article>
+
+          <article class="feature-card feature-dictionary" id="dictionary">
+            <div class="card-art">A</div>
+            <div class="feature-copy">
+              <div class="feature-title-row"><span class="feature-icon">✤</span><h3>فەرهەنگ</h3></div>
+              <p>ماڵی وشەکان بە مانا، زاراوە، نموونە و سەرچاوە.</p>
+              <div class="feature-tags">
+                <span>وشە</span><span>زاراوە</span><span>مانا</span>
+              </div>
+              <button class="card-action" data-demo="dictionary">کردنەوەی فەرهەنگ ←</button>
+            </div>
+          </article>
+
+          <article class="feature-card feature-library" id="library">
+            <div class="card-art">▤</div>
+            <div class="feature-copy">
+              <div class="feature-title-row"><span class="feature-icon">▤</span><h3>کتێبخانە</h3></div>
+              <p>کتێب و توێژینەوە بۆ خوێندنەوە و دابەزاندن.</p>
+              <div class="feature-tags">
+                <span>کتێب</span><span>PDF</span><span>توێژینەوە</span>
+              </div>
+              <button class="card-action" data-demo="library">بینینی کتێبخانە ←</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">تازەکان</div>
+            <h2>کتێبە نوێیەکان</h2>
+          </div>
+          <div class="carousel-controls">
+            <button class="carousel-btn" id="booksPrev" aria-label="پێشوو">›</button>
+            <button class="carousel-btn" id="booksNext" aria-label="دواتر">‹</button>
+          </div>
+        </div>
+
+        <div class="books-scroller" id="booksScroller">
+          <article class="book-card"><div class="book-cover cover-mountain">کۆمەڵە<br>وتار</div><div class="book-meta"><strong>مێژووی کورد</strong><span>عەبدوللە عبدولڕەحمان</span><em>مێژوو</em></div></article>
+          <article class="book-card"><div class="book-cover cover-sky">ڕێزمانی<br>کوردی</div><div class="book-meta"><strong>ڕێزمانی کوردی</strong><span>تیراژێکی مەستەفا</span><em>زمان</em></div></article>
+          <article class="book-card"><div class="book-cover cover-tree">شارى<br>خەیاڵ</div><div class="book-meta"><strong>شاری خەیاڵ</strong><span>بەختیار عەلی</span><em>ڕۆمان</em></div></article>
+          <article class="book-card"><div class="book-cover cover-space">فەلسەفەی<br>زمان</div><div class="book-meta"><strong>فەلسەفەی زمان</strong><span>نەریمان عەبدوڵڵا</span><em>فەلسەفە</em></div></article>
+          <article class="book-card"><div class="book-cover cover-desert">کوردستان<br>مێژوو</div><div class="book-meta"><strong>کوردستان</strong><span>مارتن فان برۆیڵن</span><em>مێژوو</em></div></article>
+          <article class="book-card"><div class="book-cover cover-night">ڕۆژنامەی<br>پەخش</div><div class="book-meta"><strong>ڕۆژنامەی پەخش</strong><span>بەختیار عەلی</span><em>ڕۆمان</em></div></article>
+        </div>
+      </section>
+
+      <section class="section-wrap bottom-highlights">
+        <article class="highlight-card highlight-quote">
+          <div class="highlight-icon">✥</div>
+          <div>
+            <div class="eyebrow">وتە</div>
+            <h3>«هەر کتێبێک کەمێک بەرەو زانیاتر»</h3>
+            <p>— مەلا مستەفا بارزانی</p>
+          </div>
+        </article>
+
+        <article class="highlight-card highlight-kurdana">
+          <div>
+            <div class="eyebrow">Kurdana</div>
+            <h3>بۆ کوردستانێکی زاناتر</h3>
+            <p>زمان و ئەدەب لە بنکەیەکی نوێ و هاوچەرخدا.</p>
+            <button class="outline-btn" data-scroll-target="#home">زانیاری زیاتر ←</button>
+          </div>
+        </article>
+
+        <article class="highlight-card highlight-zhir" id="zhir">
+          <div>
+            <div class="eyebrow">ژیریی دەستکرد</div>
+            <h3>Zhir</h3>
+            <p>یارمەتیدەرێکی زیرەک بۆ زمان و ئەدەبیاتی کوردی.</p>
+            <button class="outline-btn zhir-open" type="button">چات لەگەڵ Zhir ←</button>
+          </div>
+        </article>
+      </section>
+
+      <section class="section-wrap community-section" id="community">
+        <div class="community-panel">
+          <div>
+            <div class="eyebrow">کۆمەڵگەی Kurdana</div>
+            <h2>بەشداری بکە، بنووسە، فێربە و پەخش بکە</h2>
+            <p>لە داهاتوودا ئەندامان دەتوانن وتار، شیعر، توێژینەوە و کتێبی PDF پەخش بکەن و هەموو پۆستەکان لە پڕۆفایل و بەشەکەی خۆیاندا ببینرێن.</p>
+          </div>
+          <button class="primary-btn" id="communityPublish">بڵاوکردنەوەی یەکەم بابەت</button>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <div>Kurdana © 2026</div>
+        <div>کوردی · English · العربية</div>
+        <div>بۆ زمان و ئەدەبیاتی کوردی</div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Auth/Profile Modal -->
+  <div class="modal-layer" id="authModal" aria-hidden="true">
+    <div class="modal-card auth-card" role="dialog" aria-modal="true">
+      <button class="modal-x" data-close-modal="authModal">×</button>
+      <div class="modal-symbol">✥</div>
+      <div class="eyebrow">KURDANA</div>
+      <h2>دروستکردنی پڕۆفایل</h2>
+      <p class="muted">ئەم قۆناغە Frontend ـە و زانیارییەکان تەنیا لە ناو براوزەرەکەت پارێزراون.</p>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-auth-tab="register">خۆتۆمارکردن</button>
+        <button class="auth-tab" data-auth-tab="login">چوونەژوورەوە</button>
+      </div>
+
+      <form id="registerForm" class="stack-form">
+        <label>ناوی تەواو<input id="regName" required placeholder="ناوی تەواوت"></label>
+        <label>ئیمەیڵ<input id="regEmail" type="email" required placeholder="name@example.com" dir="ltr"></label>
+        <label>ژمارەی مۆبایل<input id="regPhone" placeholder="+964 ..." dir="ltr"></label>
+
+        <div class="social-row">
+          <button type="button" class="social-btn" id="googleAuth">G Google</button>
+          <button type="button" class="social-btn" id="appleAuth"> Apple</button>
+        </div>
+
+        <fieldset>
+          <legend>پێگەی تۆ</legend>
+          <div class="choice-grid three">
+            <label class="choice"><input type="radio" name="role" value="student" required><span>خوێندکار</span></label>
+            <label class="choice"><input type="radio" name="role" value="teacher"><span>مامۆستا</span></label>
+            <label class="choice"><input type="radio" name="role" value="general"><span>کەسی ئاسایی</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>ئارەزووی سەرەکی</legend>
+          <div class="choice-grid three">
+            <label class="choice"><input type="radio" name="interest" value="language" required><span>زمانەوانی</span></label>
+            <label class="choice"><input type="radio" name="interest" value="literature"><span>ئەدەبیات</span></label>
+            <label class="choice"><input type="radio" name="interest" value="both"><span>هەردووکیان</span></label>
+          </div>
+        </fieldset>
+
+        <button class="primary-btn full" type="submit">تەواوکردنی تۆمارکردن ←</button>
+      </form>
     </div>
-</header>
+  </div>
 
-<main id="home">
-    <section class="hero">
-        <div class="container hero-content">
-            <div class="hero-badge">
-                <span class="badge-dot"></span>
-                پلاتفۆرمی زمان و ئەدەبیاتی کوردی
-            </div>
-
-            <h1>Kurdana</h1>
-
-            <p class="hero-description">
-                شوێنێکی نوێ بۆ فێربوون، پاراستن و پەرەپێدانی
-                زمان و ئەدەبیاتی کوردی.
-            </p>
-
-            <div class="hero-buttons">
-                <a href="#language" class="primary-button">دەستپێکردن <span>←</span></a>
-                <a href="#literature" class="secondary-button">بینینی ئەدەبیات</a>
-            </div>
+  <!-- Profile Modal -->
+  <div class="modal-layer" id="profileModal" aria-hidden="true">
+    <div class="modal-card profile-modal" role="dialog" aria-modal="true">
+      <button class="modal-x" data-close-modal="profileModal">×</button>
+      <div class="profile-cover"></div>
+      <div class="profile-head">
+        <div class="profile-big-avatar" id="profileAvatarLarge">K</div>
+        <div>
+          <div class="eyebrow">پڕۆفایلی من</div>
+          <h2 id="profileName">میوانی Kurdana</h2>
+          <p class="muted" id="profileSummary">هێشتا هەژمارێک دروست نەکراوە.</p>
         </div>
-    </section>
-
-    <section class="main-sections">
-        <div class="container">
-            <div class="section-heading">
-                <span class="section-label">KURDANA</span>
-                <h2>جیهانی زمان و ئەدەب</h2>
-                <p>بەشە سەرەکییەکانی Kurdana بۆ گەڕان و خوێندنەوە.</p>
-            </div>
-
-            <div class="cards-grid">
-                <article class="main-card" id="language">
-                    <div class="card-top">
-                        <div class="card-icon">ܩ</div>
-                        <span class="card-number">01</span>
-                    </div>
-                    <div class="card-content">
-                        <span class="card-label">زمان</span>
-                        <h3>زمان و ڕێزمان</h3>
-                        <p>
-                            بابەت، لێکۆڵینەوە و زانیارییەکان دەربارەی
-                            زمانی کوردی و ڕێزمان و لقەکانی.
-                        </p>
-                    </div>
-                    <a href="#" class="card-link">چوونە ناو بەشەکە <span>←</span></a>
-                </article>
-
-                <article class="main-card" id="literature">
-                    <div class="card-top">
-                        <div class="card-icon">✦</div>
-                        <span class="card-number">02</span>
-                    </div>
-                    <div class="card-content">
-                        <span class="card-label">ئەدەب</span>
-                        <h3>ئەدەبیات</h3>
-                        <p>
-                            شیعر، پەخشان، وتار و دەقە ئەدەبییەکانی
-                            نووسەر و شاعیرانی کورد.
-                        </p>
-                    </div>
-                    <a href="#" class="card-link">چوونە ناو بەشەکە <span>←</span></a>
-                </article>
-            </div>
-
-            <article class="zhir-card" id="zhir">
-                <div class="zhir-glow"></div>
-                <div class="zhir-icon">✦</div>
-                <div class="zhir-content">
-                    <div class="zhir-label">ژیریی دەستکرد</div>
-                    <h2>Zhir</h2>
-                    <p>
-                        یارمەتیدەرێکی زیرەک بۆ پرسیار و گفتوگۆ
-                        دەربارەی زمان و ئەدەبیاتی کوردی.
-                    </p>
-                </div>
-                <a href="#" class="zhir-button">گفتوگۆ لەگەڵ Zhir <span>←</span></a>
-            </article>
-        </div>
-    </section>
-</main>
-
-<footer class="footer">
-    <div class="container footer-content">
-        <div class="footer-logo">
-            <span class="logo-mark">K</span>
-            <span>Kurdana</span>
-        </div>
-        <p>Kurdana — بۆ زمان و ئەدەبیاتی کوردی</p>
-        <span class="footer-copy">© 2026 Kurdana</span>
+      </div>
+      <div class="profile-stats">
+        <div><strong id="statPosts">0</strong><span>بابەت</span></div>
+        <div><strong>0</strong><span>کتێب</span></div>
+        <div><strong>0</strong><span>نیشانکراو</span></div>
+      </div>
+      <div class="profile-note" id="profileNote">پڕۆفایلەکەت لە داهاتوودا شوێنی بابەت، شیعر، توێژینەوە و کتێبەکانت دەبێت.</div>
     </div>
-</footer>
+  </div>
 
-<!-- Registration Modal -->
-<div class="modal-overlay" id="registerModal" aria-hidden="true">
-    <div class="register-modal" role="dialog" aria-modal="true" aria-labelledby="registerTitle">
-        <button class="modal-close" id="closeRegister" type="button" aria-label="داخستن">×</button>
+  <!-- Publish Modal -->
+  <div class="modal-layer" id="publishModal" aria-hidden="true">
+    <div class="modal-card publish-card" role="dialog" aria-modal="true">
+      <button class="modal-x" data-close-modal="publishModal">×</button>
+      <div class="eyebrow">بڵاوکردنەوە</div>
+      <h2>بابەتێکی نوێ زیاد بکە</h2>
+      <p class="muted">بابەتەکە دەتوانێت زمانەوانی یان ئەدەبی بێت. لەم وەشانی Frontend ـەدا داتا لە localStorage هەڵدەگیرێت.</p>
 
-        <div class="modal-header">
-            <div class="modal-icon">K</div>
-            <div>
-                <span class="modal-label">KURDANA</span>
-                <h2 id="registerTitle">دروستکردنی هەژمار</h2>
-            </div>
+      <form id="publishForm" class="stack-form">
+        <label>ناونیشان<input id="postTitle" required placeholder="ناونیشانی بابەت"></label>
+
+        <fieldset>
+          <legend>جۆری بابەت</legend>
+          <div class="choice-grid three">
+            <label class="choice"><input type="radio" name="postType" value="article" checked><span>وتار</span></label>
+            <label class="choice"><input type="radio" name="postType" value="poem"><span>شیعر</span></label>
+            <label class="choice"><input type="radio" name="postType" value="research"><span>توێژینەوە</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>بەشی سەرەکی</legend>
+          <div class="choice-grid two">
+            <label class="choice"><input type="radio" name="section" value="language" checked><span>زمان و ڕێزمان</span></label>
+            <label class="choice"><input type="radio" name="section" value="literature"><span>ئەدەبیات</span></label>
+          </div>
+        </fieldset>
+
+        <label>دەق<textarea id="postBody" rows="7" placeholder="دەقی بابەتەکە لێرە بنووسە..."></textarea></label>
+
+        <div class="normalizer-panel">
+          <div class="normalizer-head"><strong>یونیکۆدکردنی خۆکارانە</strong><span>Auto Unicode</span></div>
+          <p>کۆدی خوارەوە هەندێک نیشان و هێمای ناستاندارد پاک دەکات و دەقی کۆن بۆ نووسینی یەکگرتوو نزیک دەکات.</p>
+          <button type="button" class="ghost-btn" id="normalizeText">پاککردن و یەکخستن</button>
         </div>
 
-        <p class="modal-description">
-            زانیارییە سەرەتاییەکانت بنووسە بۆ دروستکردنی هەژمارەکەت.
-        </p>
-
-        <form id="registerForm">
-            <div class="form-group">
-                <label for="fullName">ناوی تەواو</label>
-                <input id="fullName" name="fullName" type="text" placeholder="ناوی تەواوت بنووسە" required>
-            </div>
-
-            <div class="form-group">
-                <label for="email">ئیمەیڵ</label>
-                <input id="email" name="email" type="email" placeholder="example@email.com" dir="ltr" required>
-            </div>
-
-            <div class="form-group">
-                <label for="password">وشەی نهێنی</label>
-                <input id="password" name="password" type="password" placeholder="وشەی نهێنی بنووسە" required minlength="6">
-            </div>
-
-            <fieldset class="choice-group">
-                <legend>پێگەی تۆ</legend>
-                <div class="choices">
-                    <label class="choice">
-                        <input type="radio" name="role" value="student" required>
-                        <span>خوێندکار</span>
-                    </label>
-                    <label class="choice">
-                        <input type="radio" name="role" value="teacher">
-                        <span>مامۆستا</span>
-                    </label>
-                    <label class="choice">
-                        <input type="radio" name="role" value="general">
-                        <span>کەسی ئاسایی</span>
-                    </label>
-                </div>
-            </fieldset>
-
-            <fieldset class="choice-group">
-                <legend>ئارەزووەکانت</legend>
-                <div class="choices">
-                    <label class="choice">
-                        <input type="radio" name="interest" value="language" required>
-                        <span>زمانەوانی</span>
-                    </label>
-                    <label class="choice">
-                        <input type="radio" name="interest" value="literature">
-                        <span>ئەدەبیات</span>
-                    </label>
-                    <label class="choice">
-                        <input type="radio" name="interest" value="both">
-                        <span>هەردووکیان</span>
-                    </label>
-                </div>
-            </fieldset>
-
-            <button class="complete-button" type="submit">
-                تەواوکردنی تۆمارکردن
-                <span>←</span>
-            </button>
-        </form>
+        <div class="publish-preview" id="publishPreview">پێشبینینی بابەت لێرە دەردەکەوێت.</div>
+        <button class="primary-btn full" type="submit">پەخشکردن ←</button>
+      </form>
     </div>
-</div>
+  </div>
 
-<script src="script.js"></script>
+  <!-- Zhir Drawer -->
+  <aside class="zhir-drawer" id="zhirDrawer" aria-hidden="true">
+    <div class="zhir-head">
+      <div class="zhir-brand"><div class="zhir-logo">✦</div><div><strong>Zhir</strong><small>یارمەتیدەری زمان و ئەدەب</small></div></div>
+      <button class="modal-x" id="closeZhir">×</button>
+    </div>
+    <div class="zhir-messages" id="zhirMessages">
+      <div class="zhir-message bot">سڵاو! من Zhir ـم. پرسیارێک دەربارەی زمان، ڕێزمان یان ئەدەبیاتی کوردی بنووسە.</div>
+      <div class="zhir-suggestions">
+        <button data-prompt="جیاوازی نێوان فاعیل و بەرکار چییە؟">فاعل و بەرکار</button>
+        <button data-prompt="شیعری کوردی چۆن پۆلێن دەکرێت؟">پۆلێنکردنی شیعر</button>
+        <button data-prompt="Unicode چییە؟">Unicode چییە؟</button>
+      </div>
+    </div>
+    <form class="zhir-input-row" id="zhirForm">
+      <input id="zhirInput" placeholder="پرسیارەکەت بنووسە..." autocomplete="off">
+      <button type="submit">➜</button>
+    </form>
+  </aside>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="script.js"></script>
 </body>
 </html>
