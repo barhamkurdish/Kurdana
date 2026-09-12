@@ -3,220 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Kurdana | کوردانا</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="container header-content">
+<header class="header">
+    <div class="container header-content">
+        <a href="#" class="logo">
+            <span class="logo-mark">K</span>
+            <span class="logo-text">Kurdana</span>
+        </a>
 
-            <a href="#" class="logo">
-                <span class="logo-mark">K</span>
-                <span class="logo-text">Kurdana</span>
-            </a>
+        <nav class="navigation">
+            <a href="#home" class="nav-link active">سەرەکی</a>
+            <a href="#language" class="nav-link">زمان و ڕێزمان</a>
+            <a href="#literature" class="nav-link">ئەدەبیات</a>
+            <a href="#zhir" class="nav-link">Zhir</a>
+        </nav>
 
-            <nav class="navigation">
-                <a href="#home" class="nav-link active">سەرەکی</a>
-                <a href="#language" class="nav-link">زمان و ڕێزمان</a>
-                <a href="#literature" class="nav-link">ئەدەبیات</a>
-                <a href="#zhir" class="nav-link">Zhir</a>
-            </nav>
-
-            <div class="header-actions">
-                <button class="profile-button">
-                    پڕۆفایل
-                </button>
-
-                <button class="register-button">
-                    خۆتۆمارکردن
-                </button>
-            </div>
-
+        <div class="header-actions">
+            <button class="profile-button" type="button">پڕۆفایل</button>
+            <button class="register-button" id="openRegister" type="button">خۆتۆمارکردن</button>
         </div>
-    </header>
+    </div>
+</header>
 
-
-    <main id="home">
-
-        <!-- Hero -->
-        <section class="hero">
-            <div class="container hero-content">
-
-                <div class="hero-badge">
-                    <span class="badge-dot"></span>
-                    پلاتفۆرمی زمان و ئەدەبیاتی کوردی
-                </div>
-
-                <h1>
-                    Kurdana
-                </h1>
-
-                <p class="hero-description">
-                    شوێنێکی نوێ بۆ فێربوون، پاراستن و پەرەپێدانی
-                    زمان و ئەدەبیاتی کوردی.
-                </p>
-
-                <div class="hero-buttons">
-                    <a href="#language" class="primary-button">
-                        دەستپێکردن
-                        <span>←</span>
-                    </a>
-
-                    <a href="#literature" class="secondary-button">
-                        بینینی ئەدەبیات
-                    </a>
-                </div>
-
-            </div>
-        </section>
-
-
-        <!-- Main Sections -->
-        <section class="main-sections">
-            <div class="container">
-
-                <div class="section-heading">
-                    <span class="section-label">KURDANA</span>
-                    <h2>جیهانی زمان و ئەدەب</h2>
-                    <p>
-                        بەشە سەرەکییەکانی Kurdana بۆ گەڕان و خوێندنەوە.
-                    </p>
-                </div>
-
-
-                <div class="cards-grid">
-
-                    <!-- Language Card -->
-                    <article class="main-card language-card" id="language">
-
-                        <div class="card-top">
-                            <div class="card-icon">
-                                <span>ܩ</span>
-                            </div>
-
-                            <span class="card-number">01</span>
-                        </div>
-
-                        <div class="card-content">
-                            <span class="card-label">
-                                زمان
-                            </span>
-
-                            <h3>
-                                زمان و ڕێزمان
-                            </h3>
-
-                            <p>
-                                بابەت، لێکۆڵینەوە و زانیارییەکان دەربارەی
-                                زمانی کوردی و ڕێزمان و لقەکانی.
-                            </p>
-                        </div>
-
-                        <a href="#" class="card-link">
-                            چوونە ناو بەشەکە
-                            <span>←</span>
-                        </a>
-
-                    </article>
-
-
-                    <!-- Literature Card -->
-                    <article class="main-card literature-card" id="literature">
-
-                        <div class="card-top">
-                            <div class="card-icon">
-                                <span>✦</span>
-                            </div>
-
-                            <span class="card-number">02</span>
-                        </div>
-
-                        <div class="card-content">
-                            <span class="card-label">
-                                ئەدەب
-                            </span>
-
-                            <h3>
-                                ئەدەبیات
-                            </h3>
-
-                            <p>
-                                شیعر، پەخشان، وتار و دەقە ئەدەبییەکانی
-                                نووسەر و شاعیرانی کورد.
-                            </p>
-                        </div>
-
-                        <a href="#" class="card-link">
-                            چوونە ناو بەشەکە
-                            <span>←</span>
-                        </a>
-
-                    </article>
-
-                </div>
-
-
-                <!-- Zhir Card -->
-                <article class="zhir-card" id="zhir">
-
-                    <div class="zhir-glow"></div>
-
-                    <div class="zhir-icon">
-                        <span>✦</span>
-                    </div>
-
-                    <div class="zhir-content">
-                        <div class="zhir-label">
-                            ژیریی دەستکرد
-                        </div>
-
-                        <h2>
-                            Zhir
-                        </h2>
-
-                        <p>
-                            یارمەتیدەرێکی زیرەک بۆ پرسیار و گفتوگۆ
-                            دەربارەی زمان و ئەدەبیاتی کوردی.
-                        </p>
-                    </div>
-
-                    <a href="#" class="zhir-button">
-                        گفتوگۆ لەگەڵ Zhir
-                        <span>←</span>
-                    </a>
-
-                </article>
-
-            </div>
-        </section>
-
-    </main>
-
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container footer-content">
-
-            <div class="footer-logo">
-                <span class="logo-mark">K</span>
-                <span>Kurdana</span>
+<main id="home">
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                پلاتفۆرمی زمان و ئەدەبیاتی کوردی
             </div>
 
-            <p>
-                Kurdana — بۆ زمان و ئەدەبیاتی کوردی
+            <h1>Kurdana</h1>
+
+            <p class="hero-description">
+                شوێنێکی نوێ بۆ فێربوون، پاراستن و پەرەپێدانی
+                زمان و ئەدەبیاتی کوردی.
             </p>
 
-            <span class="footer-copy">
-                © 2026 Kurdana
-            </span>
-
+            <div class="hero-buttons">
+                <a href="#language" class="primary-button">دەستپێکردن <span>←</span></a>
+                <a href="#literature" class="secondary-button">بینینی ئەدەبیات</a>
+            </div>
         </div>
-    </footer>
+    </section>
 
+    <section class="main-sections">
+        <div class="container">
+            <div class="section-heading">
+                <span class="section-label">KURDANA</span>
+                <h2>جیهانی زمان و ئەدەب</h2>
+                <p>بەشە سەرەکییەکانی Kurdana بۆ گەڕان و خوێندنەوە.</p>
+            </div>
+
+            <div class="cards-grid">
+                <article class="main-card" id="language">
+                    <div class="card-top">
+                        <div class="card-icon">ܩ</div>
+                        <span class="card-number">01</span>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-label">زمان</span>
+                        <h3>زمان و ڕێزمان</h3>
+                        <p>
+                            بابەت، لێکۆڵینەوە و زانیارییەکان دەربارەی
+                            زمانی کوردی و ڕێزمان و لقەکانی.
+                        </p>
+                    </div>
+                    <a href="#" class="card-link">چوونە ناو بەشەکە <span>←</span></a>
+                </article>
+
+                <article class="main-card" id="literature">
+                    <div class="card-top">
+                        <div class="card-icon">✦</div>
+                        <span class="card-number">02</span>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-label">ئەدەب</span>
+                        <h3>ئەدەبیات</h3>
+                        <p>
+                            شیعر، پەخشان، وتار و دەقە ئەدەبییەکانی
+                            نووسەر و شاعیرانی کورد.
+                        </p>
+                    </div>
+                    <a href="#" class="card-link">چوونە ناو بەشەکە <span>←</span></a>
+                </article>
+            </div>
+
+            <article class="zhir-card" id="zhir">
+                <div class="zhir-glow"></div>
+                <div class="zhir-icon">✦</div>
+                <div class="zhir-content">
+                    <div class="zhir-label">ژیریی دەستکرد</div>
+                    <h2>Zhir</h2>
+                    <p>
+                        یارمەتیدەرێکی زیرەک بۆ پرسیار و گفتوگۆ
+                        دەربارەی زمان و ئەدەبیاتی کوردی.
+                    </p>
+                </div>
+                <a href="#" class="zhir-button">گفتوگۆ لەگەڵ Zhir <span>←</span></a>
+            </article>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container footer-content">
+        <div class="footer-logo">
+            <span class="logo-mark">K</span>
+            <span>Kurdana</span>
+        </div>
+        <p>Kurdana — بۆ زمان و ئەدەبیاتی کوردی</p>
+        <span class="footer-copy">© 2026 Kurdana</span>
+    </div>
+</footer>
+
+<!-- Registration Modal -->
+<div class="modal-overlay" id="registerModal" aria-hidden="true">
+    <div class="register-modal" role="dialog" aria-modal="true" aria-labelledby="registerTitle">
+        <button class="modal-close" id="closeRegister" type="button" aria-label="داخستن">×</button>
+
+        <div class="modal-header">
+            <div class="modal-icon">K</div>
+            <div>
+                <span class="modal-label">KURDANA</span>
+                <h2 id="registerTitle">دروستکردنی هەژمار</h2>
+            </div>
+        </div>
+
+        <p class="modal-description">
+            زانیارییە سەرەتاییەکانت بنووسە بۆ دروستکردنی هەژمارەکەت.
+        </p>
+
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="fullName">ناوی تەواو</label>
+                <input id="fullName" name="fullName" type="text" placeholder="ناوی تەواوت بنووسە" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">ئیمەیڵ</label>
+                <input id="email" name="email" type="email" placeholder="example@email.com" dir="ltr" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">وشەی نهێنی</label>
+                <input id="password" name="password" type="password" placeholder="وشەی نهێنی بنووسە" required minlength="6">
+            </div>
+
+            <fieldset class="choice-group">
+                <legend>پێگەی تۆ</legend>
+                <div class="choices">
+                    <label class="choice">
+                        <input type="radio" name="role" value="student" required>
+                        <span>خوێندکار</span>
+                    </label>
+                    <label class="choice">
+                        <input type="radio" name="role" value="teacher">
+                        <span>مامۆستا</span>
+                    </label>
+                    <label class="choice">
+                        <input type="radio" name="role" value="general">
+                        <span>کەسی ئاسایی</span>
+                    </label>
+                </div>
+            </fieldset>
+
+            <fieldset class="choice-group">
+                <legend>ئارەزووەکانت</legend>
+                <div class="choices">
+                    <label class="choice">
+                        <input type="radio" name="interest" value="language" required>
+                        <span>زمانەوانی</span>
+                    </label>
+                    <label class="choice">
+                        <input type="radio" name="interest" value="literature">
+                        <span>ئەدەبیات</span>
+                    </label>
+                    <label class="choice">
+                        <input type="radio" name="interest" value="both">
+                        <span>هەردووکیان</span>
+                    </label>
+                </div>
+            </fieldset>
+
+            <button class="complete-button" type="submit">
+                تەواوکردنی تۆمارکردن
+                <span>←</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
