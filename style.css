@@ -975,3 +975,14 @@
 
 /* Refactor: preserve the original inline layout rule without inline CSS. */
 .brand-logo { margin: 0 auto; }
+
+
+/* Gemini API key settings — test-only */
+.api-key-modal { position: fixed; inset: 0; z-index: 340; display: none; place-items: center; padding: 20px; background: rgba(20, 24, 32, .28); backdrop-filter: blur(7px); }
+.api-key-modal.open { display: grid; }
+.api-key-dialog { width: min(430px, 100%); padding: 26px; border: 1px solid var(--app-border); border-radius: 22px; background: var(--app-canvas); color: var(--ink); box-shadow: 0 24px 70px rgba(0,0,0,.18); }
+.api-key-dialog-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 18px; }
+.api-key-dialog h2 { margin-top: 4px; font-size: 22px; }
+.api-key-note { margin: 0 0 18px; color: var(--app-subtle); font-size: 12px; line-height: 1.8; }
+.api-key-dialog .profile-field input { direction: ltr; text-align: left; }
+@media (max-width: 520px) { .api-key-dialog { padding: 20px; border-radius: 18px; } }

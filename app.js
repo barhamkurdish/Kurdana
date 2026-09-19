@@ -190,7 +190,31 @@ const root = document.documentElement;
       refreshProfilePreview();
       closeProfile();
     });
-    settingsBtn.addEventListener('click', () => { themeBtn.click(); showCreditToast(root.classList.contains('dark') ? 'ڕێکخستن: دۆخی تاریک چالاک کرا' : 'ڕێکخستن: دۆخی ڕووناک چالاک کرا'); });
+    const apiKeyModal = document.getElementById('apiKeyModal');
+    const apiKeyClose = document.getElementById('apiKeyClose');
+    const apiKeyInput = document.getElementById('apiKeyInput');
+    const apiKeySave = document.getElementById('apiKeySave');
+    const apiKeyClear = document.getElementById('apiKeyClear');
+    const closeApiKeyModal = () => apiKeyModal.classList.remove('open');
+    settingsBtn.addEventListener('click', () => {
+      apiKeyInput.value = window.ZHIR_AI.getApiKey();
+      apiKeyModal.classList.add('open');
+      apiKeyInput.focus();
+    });
+    apiKeyClose.addEventListener('click', closeApiKeyModal);
+    apiKeyModal.addEventListener('click', (event) => { if (event.target === apiKeyModal) closeApiKeyModal(); });
+    apiKeySave.addEventListener('click', () => {
+      const key = apiKeyInput.value.trim();
+      if (!key) { showCreditToast('تکایە کلیلەکە بنووسە'); apiKeyInput.focus(); return; }
+      window.ZHIR_AI.saveApiKey(key);
+      closeApiKeyModal();
+      showCreditToast('Gemini API Key پاشەکەوت کرا');
+    });
+    apiKeyClear.addEventListener('click', () => {
+      window.ZHIR_AI.clearApiKey();
+      apiKeyInput.value = '';
+      showCreditToast('Gemini API Key سڕایەوە');
+    });
 
     function toggleMenu(open) { sidebar.classList.toggle('open', open); }
     menuBtn.addEventListener('click', () => toggleMenu(true));

@@ -64,6 +64,15 @@
       </div>
     </main>
 
+      <div class="api-key-modal" id="apiKeyModal" role="dialog" aria-modal="true" aria-labelledby="apiKeyTitle">
+        <section class="api-key-dialog">
+          <div class="api-key-dialog-head"><div><div class="profile-kicker">بۆ تاقیکردنەوەی ژیر</div><h2 id="apiKeyTitle">Gemini API Key</h2></div><button class="profile-close" id="apiKeyClose" type="button" aria-label="داخستن">×</button></div>
+          <p class="api-key-note">کلیلەکەت تەنها لە براوزەری ئەم ئامێرە هەڵدەگیرێت. بۆ تاقیکردنەوە بەکاریبهێنە و لە GitHub یان لە چات مەینێرە.</p>
+          <label class="profile-field">کلیلی Gemini<input id="apiKeyInput" type="password" autocomplete="off" spellcheck="false" placeholder="AIza..." /></label>
+          <div class="profile-actions"><button class="profile-cancel" id="apiKeyClear" type="button">سڕینەوەی کلیل</button><button class="profile-save" id="apiKeySave" type="button">پاشەکەوتکردن</button></div>
+        </section>
+      </div>
+
       <div class="upgrade-modal" id="upgradeModal" role="dialog" aria-modal="true" aria-labelledby="upgradeTitle">
         <section class="upgrade-dialog">
           <div class="upgrade-dialog-head"><div><div class="upgrade-kicker">هەڵبژاردنی پلان</div><h2 id="upgradeTitle">توانای گونجاو بۆ ژیر هەڵبژێرە</h2></div><button class="upgrade-close" id="upgradeClose" type="button" aria-label="داخستن">×</button></div>
