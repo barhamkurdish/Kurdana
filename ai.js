@@ -17,7 +17,7 @@
    * کلیلی ڕاستەقینەکەت لە نێوان هەمان هێڵەی خوارەوە دابنێ.
    * =======================================================
    */
-  const GEMINI_API_KEY = "PASTE_YOUR_GEMINI_API_KEY_HERE";
+  const GEMINI_API_KEY = "Ab8RN6IWRfb92PWlqGGwBlMHlPzjN8x37X3P_IDP15HEEBrLCw";
 
   /*
    * Gemini 3.6 Flash
