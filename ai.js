@@ -9,7 +9,7 @@
   'use strict';
 
   // Put the restricted Gemini API key here. No settings screen is used.
-  const GEMINI_API_KEY = 'PASTE_YOUR_GEMINI_API_KEY_HERE';
+  const GEMINI_API_KEY = 'AQ.Ab8RN6IWRfb92PWlqGGwBlMHlPzjN8x37X3P_IDP15HEEBrLCw';
   const GEMINI_MODEL = 'gemini-2.5-flash';
   const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
