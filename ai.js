@@ -7,28 +7,11 @@
   "use strict";
 
   /*
-   * =======================================================
-   * 1) تەنها لێرە کلیلی Gemini دابنێ
-   * =======================================================
-   *
-   * نموونە:
-   * const GEMINI_API_KEY = "AIza....";
-   *
-   * کلیلی ڕاستەقینەکەت لە نێوان هەمان هێڵەی خوارەوە دابنێ.
-   * =======================================================
-   */
-  const GEMINI_API_KEY = "Ab8RN6IWRfb92PWlqGGwBlMHlPzjN8x37X3P_IDP15HEEBrLCw";
-
-  /*
-   * Gemini 3.6 Flash
-   * ئەم مۆدێلە بۆ generateContent بەکاردێت.
+   * کلیلەی Gemini لەم فایلەدا دانانرێت.
+   * کلیل لە سێرڤەرەکەدا هەڵدەگیرێت و لە ڕێگەی /api/gemini بەکاردێت.
    */
   const GEMINI_MODEL = "gemini-3.6-flash";
-
-  const GEMINI_ENDPOINT =
-    "https://generativelanguage.googleapis.com/v1beta/models/" +
-    encodeURIComponent(GEMINI_MODEL) +
-    ":generateContent";
+  const GEMINI_PROXY_ENDPOINT = "/api/gemini";
 
   const ZHIR_SYSTEM_PROMPT = Object.freeze(
     `تۆ «ژیر»یت؛ یاریدەدەری ژیریی دەستکردێکی زانا، ڕاستگۆ، هاوسۆز و پیشەیی، بە ناوی Manus. ئەرکی سەرەکیت ئەوەیە مەبەستی ڕاستەقینەی بەکارهێنەر تێبگەیت و وەڵامێکی ڕوون، قووڵ، دروست و گونجاو پێشکەش بکەیت.
@@ -93,17 +76,10 @@
 
         if (!text) return null;
 
-        return {
-          role: role,
-          parts: [{ text: text }]
-        };
+        return { role: role, text: text };
       })
       .filter(Boolean);
 
-    /*
-     * Gemini 3.6 generateContent نابێت بە model turn کۆتایی بێت.
-     * ئەگەر history بە model کۆتایی هاتبێت، لای دەبەین.
-     */
     while (
       normalized.length &&
       normalized[normalized.length - 1].role === "model"
@@ -114,85 +90,30 @@
     return normalized;
   }
 
-  function extractText(data) {
-    const candidates =
-      data &&
-      Array.isArray(data.candidates)
-        ? data.candidates
-        : [];
-
-    for (const candidate of candidates) {
-      const parts =
-        candidate &&
-        candidate.content &&
-        Array.isArray(candidate.content.parts)
-          ? candidate.content.parts
-          : [];
-
-      const text = parts
-        .map(function (part) {
-          return part && typeof part.text === "string"
-            ? part.text
-            : "";
-        })
-        .join("\n")
-        .trim();
-
-      if (text) return text;
-    }
-
-    return "";
-  }
-
-  function apiErrorMessage(data, status) {
-    if (
-      data &&
-      data.error &&
-      typeof data.error.message === "string"
-    ) {
-      return data.error.message;
-    }
-
-    return "Gemini API HTTP " + String(status || "error");
-  }
-
   async function sendMessage(messages) {
-    if (
-      !GEMINI_API_KEY ||
-      GEMINI_API_KEY === "PASTE_YOUR_GEMINI_API_KEY_HERE"
-    ) {
-      throw new Error(
-        "کلیلی Gemini لە ai.js دانەنراوە. لە سەرەتای فایلەکە GEMINI_API_KEY پڕبکەرەوە."
-      );
-    }
-
     const contents = normalizeMessages(messages);
 
     if (!contents.length) {
       throw new Error("هیچ نامەیەکی دروست بۆ Gemini نەنێردراوە.");
     }
 
-    const payload = {
-      system_instruction: {
-        parts: [{ text: ZHIR_SYSTEM_PROMPT }]
-      },
-      contents: contents
-    };
-
     let response;
 
     try {
-      response = await fetch(GEMINI_ENDPOINT, {
+      response = await fetch(GEMINI_PROXY_ENDPOINT, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": GEMINI_API_KEY
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+          model: GEMINI_MODEL,
+          systemInstruction: ZHIR_SYSTEM_PROMPT,
+          messages: contents
+        })
       });
-    } catch (networkError) {
+    } catch (_) {
       throw new Error(
-        "پەیوەندی بە Gemini API نەکرا. ئینتەرنێت و ڕێکخستنی API پشکنە."
+        "پەیوەندی بە سێرڤەری ژیر نەکرا. پەیوەندی ئینتەرنێت و ڕێکخستنی سێرڤەر پشکنە."
       );
     }
 
@@ -205,18 +126,18 @@
     }
 
     if (!response.ok) {
-      throw new Error(apiErrorMessage(data, response.status));
-    }
-
-    const text = extractText(data);
-
-    if (!text) {
       throw new Error(
-        "Gemini هیچ وەڵامێکی دەقی نەگەڕاندەوە."
+        data && typeof data.error === "string"
+          ? data.error
+          : "سێرڤەری ژیر وەڵامی دروستی نەدا. HTTP " + String(response.status)
       );
     }
 
-    return text;
+    if (!data || typeof data.text !== "string" || !data.text.trim()) {
+      throw new Error("Gemini هیچ وەڵامێکی دەقی نەگەڕاندەوە.");
+    }
+
+    return data.text.trim();
   }
 
   window.ZHIR_AI = Object.freeze({
