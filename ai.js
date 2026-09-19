@@ -26,7 +26,7 @@
   }
 
   async function sendMessage(message, history = []) {
-    if (!GEMINI_API_KEY || GEMINI_API_KEY === 'PASTE_YOUR_GEMINI_API_KEY_HERE') {
+    if (!GEMINI_API_KEY || GEMINI_API_KEY === 'Ab8RN6IWRfb92PWlqGGwBlMHlPzjN8x37X3P_IDP15HEEBrLCw') {
       throw new Error('کلیلی Gemini لە ai.js دانەنراوە.');
     }
 
