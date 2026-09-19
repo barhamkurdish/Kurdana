@@ -319,8 +319,6 @@ const root = document.documentElement;
       appendUserMessage(val);
       addHistoryItem(val);
       appendCurrentMessage('user', val);
-      const conversationHistory = getCurrentMessages().slice(0, -1);
-
       userInput.value = '';
       userInput.style.height = '24px';
       micBtn.classList.remove('hidden');
@@ -334,7 +332,7 @@ const root = document.documentElement;
       chatContainer.scrollTop = chatContainer.scrollHeight;
 
       try {
-        const responseText = await window.ZHIR_AI.sendMessage(val, conversationHistory);
+        const responseText = await window.ZHIR_AI.sendMessage(getCurrentMessages());
         thinkingBubble.remove();
         streamAssistantMessage(responseText, responseProfile);
         appendCurrentMessage('model', responseText);
