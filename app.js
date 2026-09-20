@@ -366,6 +366,50 @@ const root = document.documentElement;
       }, profile.streamDelay || 25);
     }
 
+    function getDemoResponse(mode, userText) {
+      const shortText = userText.length > 90 ? `${userText.slice(0, 90)}…` : userText;
+      const responses = {
+        translate: `دێمۆی مۆدی وەرگێڕان:
+
+دەقەکەت وەرگیرا: «${shortText}»
+
+وەرگێڕانی نموونەیی ژیر بۆ ئەم تاقیکردنەوەیە ئامادە کراوە. لە وەشانی ڕاستەقینەدا، دەقی سەرەکی بە وردی بۆ زمانە دیاریکراوەکەت وەردەگێڕدرێت.`,
+        summarize: `دێمۆی مۆدی کورتکردنەوە:
+
+دەقەکەت وەرگیرا: «${shortText}»
+
+پوختەی نموونەیی:
+• بیرۆکەی سەرەکی دەستنیشان کرا.
+• زانیارییە گرنگەکان جیا کرانەوە.
+• دەقەکە بە شێوەیەکی کورتر ڕێکخرایەوە.`,
+        code: `دێمۆی مۆدی نووسینی کۆد:
+
+داواکارییەکەت وەرگیرا: «${shortText}»
+
+لە دێمۆدا ژیر دەڵێت: کۆدەکە دەتوانێت بە شێوەیەکی پاک، سادە و ڕوون دروست بکرێت. لە وەشانی ڕاستەقینەدا کۆدی گونجاو بۆ داواکارییەکەت ئامادە دەکرێت.`,
+        knowledge: `دێمۆی مۆدی زانین:
+
+پرسیارەکەت وەرگیرا: «${shortText}»
+
+ئەمە وەڵامێکی دێمۆییە بۆ تاقیکردنەوەی ڕووکار. ژیر لە مۆدی زانین هەوڵ دەدات وەڵامەکە بە شێوەیەکی ڕوون، ڕێکخراو و ئاسان بۆ تێگەیشتن پێشکەش بکات.`,
+        insight: `دێمۆی مۆدی سەرنج:
+
+بیرۆکەکەت وەرگیرا: «${shortText}»
+
+ژیر لەم مۆدەدا سەرنجی لایەنە گرنگەکان دەخاتەڕوو، بیرۆکە نوێکان پێشنیار دەکات و یارمەتیت دەدات کێشەکە لە چەند ڕوانگەیەکەوە ببینیت.`,
+        writing: `دێمۆی مۆدی دارشتن:
+
+دەقەکەت وەرگیرا: «${shortText}»
+
+ژیر لەم مۆدەدا دەقەکە ڕێکدەخات، وشەکان جوانتر دەکات و شێوازێکی گونجاو بۆ مەبەستی نووسینەکە پێشنیار دەکات. ئەمە تەنها وەڵامی دێمۆییە بۆ تاقیکردنەوەی دیزاین.`
+      };
+      return responses[mode] || `دێمۆی ژیر:
+
+نامەکەت وەرگیرا: «${shortText}»
+
+ئەم وەڵامە تەنها بۆ تاقیکردنەوەی دیزاینە و هیچ پەیوەندییەکی بە Gemini API نییە.`;
+    }
+
     composerForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const val = userInput.value.trim();
@@ -391,14 +435,11 @@ const root = document.documentElement;
       chatContainer.scrollTop = chatContainer.scrollHeight;
 
       try {
-        const responseText = await window.ZHIR_AI.sendMessage(getCurrentMessages());
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        const responseText = getDemoResponse(activeWelcomeMode, val);
         thinkingBubble.remove();
         streamAssistantMessage(responseText, responseProfile);
         appendCurrentMessage('model', responseText);
-      } catch (error) {
-        thinkingBubble.remove();
-        const message = error?.message || 'هەڵەیەک لە پەیوەندی بە ژیر ڕوویدا.';
-        streamAssistantMessage(`ببورە، ${message}`, responseProfile);
       } finally {
         sendBtn.disabled = false;
       }
