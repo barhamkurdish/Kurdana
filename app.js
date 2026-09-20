@@ -114,7 +114,7 @@ const root = document.documentElement;
     checkoutPay.addEventListener('click', () => { if (!checkoutSelectedPlan) return; const method = selectedPaymentMethod(); const required = method === 'card' ? [document.getElementById('cardholderName'), document.getElementById('cardNumber'), document.getElementById('cardExpiry'), document.getElementById('cardCvv')] : [document.getElementById(method === 'fastpay' ? 'fastpayNumber' : 'fibNumber')]; const missing = required.some((field) => !field.value.trim()); if (missing) { showCreditToast('تکایە خانەکانی پارەدانی دێمۆ پڕ بکەرەوە'); required.find((field) => !field.value.trim())?.focus(); return; } checkoutPay.disabled = true; checkoutPay.textContent = 'لە پشکنین‌دایە...'; setTimeout(() => { setActivePlan(checkoutSelectedPlan); planTrigger.querySelector('span:last-child').textContent = checkoutSelectedPlan; document.querySelectorAll('.plan-option').forEach((item) => { const selected = item.dataset.plan === checkoutSelectedPlan; item.classList.toggle('selected', selected); item.setAttribute('aria-checked', String(selected)); }); checkoutModal.classList.remove('open'); showCreditToast(`پیرۆزە — ${checkoutSelectedPlan} لە دێمۆدا چالاک کرا`); }, 900); });
     document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeUpgradeModals(); });
 
-    if (localStorage.getItem(KEYS.theme) === 'dark') root.classList.add('dark');
+    if (localStorage.getItem(KEYS.theme) !== 'light') root.classList.add('dark');
     themeBtn.addEventListener('click', () => {
       root.classList.toggle('dark');
       localStorage.setItem(KEYS.theme, root.classList.contains('dark') ? 'dark' : 'light');
@@ -374,4 +374,33 @@ const root = document.documentElement;
       welcomeBox.style.display = 'block';
       toggleMenu(false);
       clearCurrentMessages();
+    });
+
+    // پێشنیارەکانی پەڕەی سەرەتا: کرتە لەسەر هەر کارتێک پرسیارەکە دەخاتە ناو خانەی چات.
+    document.querySelectorAll('.welcome-card[data-prompt]').forEach((card) => {
+      card.addEventListener('click', () => {
+        userInput.value = card.dataset.prompt || '';
+        userInput.dispatchEvent(new Event('input', { bubbles: true }));
+        userInput.focus({ preventScroll: true });
+      });
+    });
+
+    // ناوبەری خوارەوە بە کارە واقعییەکانی پڕۆژە دەبەسترێت.
+    document.querySelectorAll('.bottom-nav-item').forEach((item) => {
+      item.addEventListener('click', () => {
+        const nav = item.dataset.nav;
+        document.querySelectorAll('.bottom-nav-item').forEach((button) => button.classList.toggle('active', button === item));
+        if (nav === 'home') {
+          messagesStream.innerHTML = '';
+          welcomeBox.style.display = '';
+          clearCurrentMessages();
+          chatContainer.scrollTop = 0;
+        } else if (nav === 'history') {
+          toggleMenu(true);
+        } else if (nav === 'settings') {
+          settingsBtn.click();
+        } else if (nav === 'favorites') {
+          showCreditToast('دڵخوازەکان لە وەشانی داهاتوودا بەردەست دەبن');
+        }
+      });
     });
