@@ -976,727 +976,209 @@
 /* Refactor: preserve the original inline layout rule without inline CSS. */
 .brand-logo { margin: 0 auto; }
 
-
-/* Gemini API key settings — test-only */
-.api-key-modal { position: fixed; inset: 0; z-index: 340; display: none; place-items: center; padding: 20px; background: rgba(20, 24, 32, .28); backdrop-filter: blur(7px); }
-.api-key-modal.open { display: grid; }
-.api-key-dialog { width: min(430px, 100%); padding: 26px; border: 1px solid var(--app-border); border-radius: 22px; background: var(--app-canvas); color: var(--ink); box-shadow: 0 24px 70px rgba(0,0,0,.18); }
-.api-key-dialog-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 18px; }
-.api-key-dialog h2 { margin-top: 4px; font-size: 22px; }
-.api-key-note { margin: 0 0 18px; color: var(--app-subtle); font-size: 12px; line-height: 1.8; }
-.api-key-dialog .profile-field input { direction: ltr; text-align: left; }
-@media (max-width: 520px) { .api-key-dialog { padding: 20px; border-radius: 18px; } }
-
-/* ============================================================
-   ZHIR PRE-CHAT / MOBILE NEON HOME — final surgical layer
-   This layer changes only the welcome/home presentation.
-   ============================================================ */
-:root {
-  --zhir-bg: #06122e;
-  --zhir-bg-2: #0b1838;
-  --zhir-panel: rgba(12, 29, 66, .78);
-  --zhir-line: rgba(87, 163, 255, .34);
-  --zhir-text: #f5f7ff;
-  --zhir-muted: #9aaed0;
-  --zhir-cyan: #39e7ff;
-  --zhir-purple: #a45cff;
-  --zhir-amber: #ffc34d;
+/* =======================================================
+   Final mobile chat-mode + composer theme fixes
+   ======================================================= */
+.welcome-box {
+  width: min(760px, calc(100% - 28px));
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 18px 0 120px;
 }
 
-html.dark .main-content,
-html.dark .chat-container,
-html.dark .app-layout { background: radial-gradient(circle at 50% 33%, rgba(37, 83, 170, .18), transparent 30%), radial-gradient(circle at 80% 78%, rgba(133, 41, 221, .16), transparent 30%), var(--zhir-bg) !important; color: var(--zhir-text); }
-html.dark .chat-container { scrollbar-color: rgba(91, 145, 255, .45) transparent; }
+.welcome-cards {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+  direction: rtl;
+}
 
-.topbar {
-  position: relative !important;
-  height: 112px !important;
-  min-height: 112px !important;
-  padding: 20px 28px !important;
-  display: grid !important;
-  grid-template-columns: 1fr auto 1fr !important;
-  align-items: start !important;
+.welcome-card {
+  position: relative;
+  min-height: 142px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 7px;
+  padding: 16px 16px 40px;
+  border: 1px solid var(--line-strong);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--surface) 92%, var(--user-bubble));
+  color: var(--ink);
+  font: inherit;
+  text-align: right;
+  cursor: pointer;
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--ink) 7%, transparent);
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+.welcome-card:hover,
+.welcome-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--ink) 30%, var(--line-strong));
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--ink) 11%, transparent);
+  outline: none;
+}
+
+.welcome-card-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: var(--user-bubble);
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  font-size: 19px;
+  font-weight: 800;
+  direction: ltr;
+}
+
+.welcome-card-code .welcome-card-icon { color: #62b7ff; }
+.welcome-card-translate .welcome-card-icon,
+.welcome-card-insight .welcome-card-icon { color: #a66cff; }
+.welcome-card-summarize .welcome-card-icon,
+.welcome-card-knowledge .welcome-card-icon { color: #45d7c7; }
+.welcome-card-writing .welcome-card-icon { color: #e8b44b; }
+
+.welcome-card strong {
+  font-size: 16px;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.welcome-card-description {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.welcome-card-arrow {
+  position: absolute;
+  left: 13px;
+  bottom: 12px;
+  width: 29px;
+  height: 29px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--user-bubble);
+  color: var(--ink);
+  font-size: 21px;
+  line-height: 1;
+}
+
+.welcome-note {
+  margin-top: 22px;
+  color: var(--muted);
+  font-size: 11px;
+  text-align: center;
+}
+
+.welcome-note span { color: #a66cff; margin-inline-end: 5px; }
+
+.chat-mode-banner {
+  width: min(760px, calc(100% - 28px));
+  margin: 14px auto 6px;
+  padding: 11px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: color-mix(in srgb, var(--surface) 94%, var(--user-bubble));
+  color: var(--ink);
+}
+
+.chat-mode-banner strong { font-size: 13px; }
+.chat-mode-banner span { color: var(--muted); font-size: 11px; }
+
+/* Keep the writing area readable in both modes, including :focus. */
+.composer-box,
+.composer-box:focus,
+.composer-box:focus-within {
+  background: var(--surface) !important;
+  color: var(--ink) !important;
+  border-color: var(--line-strong) !important;
+}
+
+.composer-box textarea#userInput,
+.composer-box textarea#userInput:focus {
   background: transparent !important;
-  border: 0 !important;
+  color: var(--ink) !important;
+  -webkit-text-fill-color: var(--ink) !important;
+  caret-color: var(--ink) !important;
+  outline: none !important;
 }
-.top-brand { grid-column: 1; justify-self: start; display: flex; flex-direction: row; align-items: center; gap: 12px; direction: ltr; }
-.top-brand-mark { width: 58px; height: 58px; border-radius: 18px; display: grid; place-items: center; border: 1px solid rgba(94, 142, 255, .42); background: linear-gradient(145deg, rgba(37, 57, 123, .95), rgba(25, 29, 82, .9)); box-shadow: 0 0 26px rgba(75, 107, 255, .20), inset 0 0 18px rgba(77, 124, 255, .16); overflow: hidden; }
-.top-brand-mark .brand-mark { width: 100%; height: 100%; }
-.top-brand-title { color: #fff; font-size: 36px; line-height: 1; font-weight: 800; letter-spacing: -1px; }
 
-.plan-switcher { grid-column: 2; justify-self: center; position: relative; z-index: 80; }
-.plan-trigger { width: 220px !important; height: 58px !important; border-radius: 30px !important; border: 1px solid rgba(78, 144, 255, .43) !important; background: rgba(8, 27, 66, .86) !important; color: #fff !important; box-shadow: inset 0 0 18px rgba(49, 104, 222, .09), 0 0 18px rgba(42, 104, 230, .08) !important; font-size: 20px !important; font-weight: 800 !important; display: flex !important; align-items: center !important; justify-content: center !important; gap: 18px !important; }
-.plan-trigger-chevron { order: 2 !important; width: 38px !important; height: 38px !important; border-radius: 50%; display: grid !important; place-items: center; background: rgba(30, 75, 156, .72); }
-.plan-trigger-chevron svg { width: 19px; height: 19px; }
-.plan-trigger > span:first-child:not(.plan-trigger-chevron) { order: 1; }
-.plan-menu { top: 64px !important; border-color: rgba(87, 154, 255, .32) !important; background: rgba(8, 24, 56, .98) !important; box-shadow: 0 20px 55px rgba(0,0,0,.38), 0 0 30px rgba(48, 108, 255, .10) !important; }
-.plan-option { color: #fff !important; }
-.plan-option small { color: #93a9d1 !important; }
+.composer-box textarea#userInput::placeholder {
+  color: var(--muted) !important;
+  -webkit-text-fill-color: var(--muted) !important;
+  opacity: .9 !important;
+}
 
-.header-theme-toggle { grid-column: 3; justify-self: end; width: 116px; height: 58px; border: 1px solid rgba(95, 120, 169, .38); border-radius: 30px; display: flex; align-items: center; justify-content: space-around; padding: 6px 9px; cursor: pointer; background: linear-gradient(120deg, rgba(240,245,255,.96), rgba(210,221,241,.96)); color: #5e6b86; box-shadow: 0 0 22px rgba(153, 176, 229, .12); font: inherit; }
-.header-theme-toggle .theme-orb { width: 38px; height: 42px; border-radius: 50%; background: linear-gradient(180deg, #a675ff, #8658ed); box-shadow: 0 0 16px rgba(150, 100, 255, .48); }
-.header-theme-toggle .theme-moon, .header-theme-toggle .theme-sun { font-size: 25px; line-height: 1; }
-.menu-btn { display: grid !important; grid-column: 3; justify-self: end; width: 58px !important; height: 58px !important; margin-inline-start: 130px; margin-top: 0; border: 1px solid rgba(76, 136, 242, .36) !important; border-radius: 18px !important; background: rgba(8, 27, 65, .68) !important; color: #fff !important; box-shadow: 0 0 18px rgba(37, 103, 235, .08); }
-.header-theme-toggle + .menu-btn { transform: translateX(0); }
+html.dark .composer-box,
+html.dark .composer-box:focus,
+html.dark .composer-box:focus-within {
+  background: var(--surface) !important;
+  color: var(--ink) !important;
+  border-color: var(--line-strong) !important;
+}
 
-.chat-container { padding: 20px 22px 190px !important; align-items: center !important; }
-.messages-stream { display: flex; }
-.welcome-box { width: min(660px, 100%); margin: 0 auto !important; padding: 6px 0 18px; text-align: center; position: relative; animation: zhirWelcomeIn .75s ease both; }
-@keyframes zhirWelcomeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-.welcome-orbit { position: relative; width: min(610px, 94vw); height: 330px; margin: 0 auto -8px; pointer-events: none; }
-.orbit-line { position: absolute; left: 50%; top: 50%; width: 92%; height: 52%; border: 1px solid rgba(61, 126, 239, .35); border-radius: 50%; transform: translate(-50%,-50%) rotate(-9deg); box-shadow: 0 0 16px rgba(47, 106, 245, .08); }
-.orbit-line-b { width: 82%; height: 43%; transform: translate(-50%,-50%) rotate(12deg); border-color: rgba(122, 80, 255, .26); }
-.orbit-dot { position: absolute; width: 9px; height: 9px; border-radius: 50%; box-shadow: 0 0 15px currentColor; }
-.orbit-dot-1 { left: 15%; top: 53%; color: #35dffb; background: currentColor; }
-.orbit-dot-2 { right: 14%; top: 45%; color: #b66aff; background: currentColor; }
-.orbit-dot-3 { right: 24%; bottom: 14%; color: #6ba8ff; background: currentColor; }
-.welcome-float { position: absolute; width: 94px; height: 94px; display: grid; place-items: center; border: 1px solid rgba(78, 129, 235, .48); border-radius: 26px; background: linear-gradient(145deg, rgba(20, 49, 105, .88), rgba(11, 24, 62, .96)); color: #52e8ff; box-shadow: 0 0 28px rgba(42, 176, 255, .28), inset 0 0 20px rgba(41, 89, 180, .18); transform: rotate(-5deg); }
-.welcome-float svg { width: 44px; height: 44px; }
-.welcome-float-chat { left: 3%; top: 31%; color: #bc5cff; box-shadow: 0 0 32px rgba(182, 73, 255, .35); transform: rotate(-6deg); }
-.welcome-float-code { right: 3%; top: 33%; transform: rotate(7deg); }
-.welcome-float-brain { left: 3%; bottom: 5%; color: #48e8e4; box-shadow: 0 0 32px rgba(35, 229, 220, .27); transform: rotate(-7deg); }
-.welcome-float-bulb { right: 3%; bottom: 3%; color: #ffca48; box-shadow: 0 0 32px rgba(255, 183, 51, .30); transform: rotate(7deg); }
-.welcome-core { position: absolute; left: 50%; top: 76px; transform: translateX(-50%); width: 278px; height: 278px; padding: 25px; border-radius: 62px; background: linear-gradient(145deg, rgba(232, 239, 255, .96), rgba(166, 181, 224, .86)); border: 1px solid rgba(225, 239, 255, .95); box-shadow: 0 0 35px rgba(102, 151, 255, .25), 0 20px 45px rgba(0,0,0,.24), inset 0 0 25px rgba(255,255,255,.55); }
-.welcome-core-inner { width: 100%; height: 100%; border-radius: 42px; display: grid; place-items: center; background: linear-gradient(145deg, rgba(221, 231, 250, .9), rgba(181, 196, 232, .78)); border: 1px solid rgba(177, 198, 237, .8); box-shadow: inset 0 0 20px rgba(94, 126, 194, .10); }
-.welcome-peace { width: 166px; height: 166px; display: grid; place-items: center; border-radius: 42px; background: rgba(250, 251, 255, .96); color: #070707; font-family: Arial, sans-serif; font-size: 100px; line-height: 1; text-rendering: geometricPrecision; box-shadow: 0 8px 18px rgba(37, 58, 104, .08); }
-.welcome-copy { position: relative; z-index: 3; margin: -2px auto 24px; max-width: 640px; }
-.welcome-copy h1 { margin: 0 0 8px !important; color: #fff !important; font-size: clamp(30px, 5vw, 48px) !important; font-weight: 900 !important; letter-spacing: -1px; background: linear-gradient(100deg, #4edfff 4%, #b46aff 48%, #7fa6ff 92%); -webkit-background-clip: text !important; background-clip: text !important; -webkit-text-fill-color: transparent !important; animation: none !important; }
-.welcome-copy h1 span { background: linear-gradient(100deg, #9c6aff, #b874ff, #63dfff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-.welcome-copy p { margin: 0 auto; color: #9eb0d1; font-size: 16px; line-height: 2; max-width: 560px; }
-.welcome-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; position: relative; z-index: 4; }
-.welcome-card { min-height: 164px; position: relative; padding: 18px 16px 16px; text-align: right; direction: rtl; border-radius: 22px; border: 1px solid rgba(67, 131, 238, .42); background: linear-gradient(145deg, rgba(15, 39, 86, .82), rgba(7, 23, 56, .92)); color: #fff; cursor: pointer; font-family: inherit; box-shadow: inset 0 0 22px rgba(45, 91, 171, .08), 0 10px 25px rgba(0,0,0,.14); transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
-.welcome-card:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(0,0,0,.20), 0 0 24px rgba(66, 123, 255, .12); }
-.welcome-card:active { transform: translateY(-1px) scale(.99); }
-.welcome-card-icon { width: 54px; height: 54px; margin-bottom: 14px; display: grid; place-items: center; border-radius: 17px; background: rgba(37, 91, 180, .38); color: #55dfff; border: 1px solid rgba(83, 160, 255, .24); box-shadow: 0 0 18px rgba(44, 147, 255, .12); }
-.welcome-card-icon svg { width: 29px; height: 29px; }
-.welcome-card strong { display: block; font-size: 18px; font-weight: 850; margin-bottom: 6px; }
-.welcome-card small { display: block; max-width: 180px; color: #8ea4ca; font-size: 12px; line-height: 1.8; }
-.card-arrow { position: absolute; left: 14px; bottom: 12px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: rgba(31, 79, 161, .64); color: #d9e8ff; font-size: 28px; line-height: 1; }
-.card-purple { border-color: rgba(157, 70, 255, .58); }
-.card-purple .welcome-card-icon { color: #d16aff; background: rgba(110, 42, 188, .34); }
-.card-cyan { border-color: rgba(34, 221, 211, .50); }
-.card-cyan .welcome-card-icon { color: #62f1dc; background: rgba(20, 132, 128, .30); }
-.card-blue { border-color: rgba(50, 151, 255, .50); }
-.card-amber { border-color: rgba(255, 177, 44, .56); }
-.card-amber .welcome-card-icon { color: #ffc34f; background: rgba(153, 94, 29, .30); }
-.welcome-status { margin-top: 26px; color: #7187ad; font-size: 13px; }
-.welcome-status b { color: #9eaecc; font-weight: 700; }
-.welcome-status i { color: #b466ff; font-style: normal; margin-inline-start: 5px; }
-
-
-html:not(.dark) .main-content,
-html:not(.dark) .chat-container,
-html:not(.dark) .app-layout { background: #f7f7f5 !important; }
-html:not(.dark) .top-brand-title { color: #202124; }
+html.dark .composer-box textarea#userInput,
+html.dark .composer-box textarea#userInput:focus {
+  color: var(--ink) !important;
+  -webkit-text-fill-color: var(--ink) !important;
+  caret-color: var(--ink) !important;
+}
 
 @media (max-width: 768px) {
-  .topbar { height: 86px !important; min-height: 86px !important; padding: 14px 18px !important; grid-template-columns: 1fr auto 1fr !important; }
-  .top-brand { gap: 9px; }
-  .top-brand-mark { width: 54px; height: 54px; border-radius: 17px; }
-  .top-brand-title { font-size: 31px; }
-  .plan-trigger { width: 205px !important; height: 54px !important; font-size: 18px !important; }
-  .header-theme-toggle { width: 108px; height: 54px; margin-inline-end: 68px; }
-  .menu-btn { position: absolute !important; right: 14px; top: 14px; width: 54px !important; height: 54px !important; margin: 0 !important; }
-  .topbar .header-theme-toggle { position: absolute; right: 82px; top: 14px; }
-  .topbar .plan-switcher { position: absolute; left: 50%; top: 14px; transform: translateX(-50%); }
-  .topbar .top-brand { position: absolute; left: 18px; top: 14px; }
-  .chat-container { padding: 0 14px 14px !important; }
-  .welcome-box { width: 100%; padding-bottom: 10px; }
-  .welcome-orbit { width: 100%; height: 294px; margin-top: -5px; }
-  .welcome-float { width: 82px; height: 82px; border-radius: 23px; }
-  .welcome-float svg { width: 38px; height: 38px; }
-  .welcome-core { top: 70px; width: 250px; height: 250px; padding: 22px; border-radius: 54px; }
-  .welcome-peace { width: 150px; height: 150px; border-radius: 38px; font-size: 88px; }
-  .welcome-copy { margin-bottom: 19px; }
-  .welcome-copy h1 { font-size: 31px !important; line-height: 1.45; }
-  .welcome-copy p { font-size: 13px; line-height: 1.9; padding: 0 8px; }
-  .welcome-cards { grid-template-columns: repeat(2, 1fr); gap: 11px; }
-  .welcome-card { min-height: 151px; padding: 14px 13px 13px; border-radius: 19px; }
-  .welcome-card-icon { width: 48px; height: 48px; border-radius: 15px; margin-bottom: 10px; }
-  .welcome-card-icon svg { width: 25px; height: 25px; }
-  .welcome-card strong { font-size: 16px; margin-bottom: 4px; }
-  .welcome-card small { font-size: 10.5px; line-height: 1.75; }
-  .card-arrow { width: 32px; height: 32px; left: 9px; bottom: 9px; font-size: 24px; }
-  .welcome-status { margin-top: 18px; font-size: 11px; }
-  .composer-container { width: calc(100% - 30px) !important; margin: 0 auto 8px !important; }
-  .composer-box { min-height: 66px !important; height: 66px !important; border-radius: 25px !important; background: rgba(10, 28, 66, .92) !important; border-color: rgba(81, 146, 255, .38) !important; box-shadow: 0 10px 32px rgba(0,0,0,.25), inset 0 0 18px rgba(53, 105, 201, .10) !important; }
-  html.dark .composer-box textarea#userInput { color: #fff !important; }
-  html.dark .composer-box textarea#userInput::placeholder { color: #7f95ba !important; }
-  html.dark .composer-box .action-btn { color: #c2d1ed !important; }
-  html.dark .composer-box .send-btn { background: linear-gradient(145deg, #8d4cff, #b24cff) !important; color: #fff !important; box-shadow: 0 0 20px rgba(165, 75, 255, .32); }
-}
-
-@media (max-width: 430px) {
-  .top-brand-title { display: none; }
-  .top-brand-mark { width: 52px; height: 52px; }
-  .plan-trigger { width: 184px !important; }
-  .topbar .header-theme-toggle { right: 75px; width: 95px; }
-  .topbar .menu-btn { right: 10px; }
-  .welcome-orbit { height: 270px; }
-  .welcome-core { width: 225px; height: 225px; top: 68px; padding: 19px; }
-  .welcome-peace { width: 138px; height: 138px; font-size: 80px; }
-  .welcome-float { width: 72px; height: 72px; border-radius: 20px; }
-  .welcome-float svg { width: 33px; height: 33px; }
-  .welcome-copy h1 { font-size: 28px !important; }
-  .welcome-cards { gap: 9px; }
-  .welcome-card { min-height: 145px; padding: 12px 11px; }
-  .welcome-card strong { font-size: 15px; }
-  .welcome-card small { font-size: 9.8px; }
-}
-
-/* Mobile compact welcome screen: no bottom navigation, no extra dead space. */
-@media (max-width: 768px) {
-  .chat-container {
-    padding: 0 12px 8px !important;
-  }
-
   .welcome-box {
-    width: 100%;
-    padding: 0 0 4px;
+    width: min(100% - 20px, 620px);
+    padding: 10px 0 104px;
   }
 
-  .welcome-orbit {
-    width: 100%;
-    height: 176px;
-    margin: -2px auto 0;
-  }
-
-  .welcome-core {
-    top: 34px;
-    width: 150px;
-    height: 150px;
-    padding: 12px;
-    border-radius: 36px;
-  }
-
-  .welcome-core-inner {
-    border-radius: 27px;
-  }
-
-  .welcome-peace {
-    width: 88px;
-    height: 88px;
-    border-radius: 25px;
-    font-size: 54px;
-  }
-
-  .welcome-float {
-    width: 58px;
-    height: 58px;
-    border-radius: 17px;
-  }
-
-  .welcome-float svg {
-    width: 28px;
-    height: 28px;
-  }
-
-  .welcome-float-chat { left: 5%; top: 23%; }
-  .welcome-float-code { right: 5%; top: 25%; }
-  .welcome-float-brain { left: 5%; bottom: 3%; }
-  .welcome-float-bulb { right: 5%; bottom: 1%; }
-
-  .welcome-copy {
-    margin: 0 auto 10px;
-    max-width: 100%;
-  }
-
-  .welcome-copy h1 {
-    margin-bottom: 4px !important;
-    font-size: 22px !important;
-    line-height: 1.3 !important;
-    letter-spacing: -.5px;
-  }
-
-  .welcome-copy p {
-    padding: 0 4px;
-    font-size: 10.5px;
-    line-height: 1.55;
+  .welcome-box h1 {
+    font-size: 25px !important;
+    margin-top: 10px !important;
   }
 
   .welcome-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 7px;
+    gap: 9px;
+    margin-top: 17px;
   }
 
   .welcome-card {
-    min-height: 108px;
-    padding: 9px 8px 8px;
-    border-radius: 15px;
-  }
-
-  .welcome-card-icon {
-    width: 35px;
-    height: 35px;
-    margin-bottom: 6px;
-    border-radius: 11px;
-  }
-
-  .welcome-card-icon svg {
-    width: 19px;
-    height: 19px;
-  }
-
-  .welcome-card strong {
-    font-size: 13px;
-    margin-bottom: 2px;
-  }
-
-  .welcome-card small {
-    max-width: 100%;
-    font-size: 8.5px;
-    line-height: 1.45;
-  }
-
-  .card-arrow {
-    left: 6px;
-    bottom: 6px;
-    width: 26px;
-    height: 26px;
-    font-size: 20px;
-  }
-
-  .welcome-status {
-    margin-top: 9px;
-    font-size: 9.5px;
-  }
-
-  .composer-container {
-    position: fixed !important;
-    left: 10px !important;
-    right: 10px !important;
-    bottom: max(8px, env(safe-area-inset-bottom)) !important;
-    width: auto !important;
-    margin: 0 !important;
-    z-index: 50 !important;
-  }
-
-  .composer-box {
-    min-height: 54px !important;
-    height: 54px !important;
-    max-height: 54px !important;
-    padding: 7px 9px !important;
-    border-radius: 19px !important;
-  }
-}
-
-@media (max-width: 430px) {
-  .topbar {
-    height: 64px !important;
-    min-height: 64px !important;
-    padding: 8px 10px !important;
-  }
-
-  .top-brand {
-    left: 10px !important;
-    top: 8px !important;
-  }
-
-  .top-brand-mark {
-    width: 44px;
-    height: 44px;
-  }
-
-  .plan-trigger {
-    width: 168px !important;
-    height: 44px !important;
-    font-size: 16px !important;
-  }
-
-  .topbar .header-theme-toggle {
-    right: 60px;
-    top: 8px;
-    width: 86px;
-    height: 44px;
-  }
-
-  .topbar .menu-btn {
-    right: 8px;
-    top: 8px;
-    width: 44px !important;
-    height: 44px !important;
-    border-radius: 14px !important;
-  }
-
-  .welcome-orbit {
-    height: 162px;
-  }
-
-  .welcome-core {
-    top: 31px;
-    width: 135px;
-    height: 135px;
-    padding: 11px;
-    border-radius: 32px;
-  }
-
-  .welcome-peace {
-    width: 80px;
-    height: 80px;
-    border-radius: 23px;
-    font-size: 49px;
-  }
-
-  .welcome-float {
-    width: 54px;
-    height: 54px;
+    min-height: 122px;
+    padding: 11px 11px 34px;
     border-radius: 16px;
-  }
-
-  .welcome-float svg {
-    width: 25px;
-    height: 25px;
-  }
-
-  .welcome-copy h1 {
-    font-size: 21px !important;
-  }
-
-  .welcome-copy p {
-    font-size: 10px;
-  }
-
-  .welcome-card {
-    min-height: 104px;
-    padding: 8px 7px 7px;
+    gap: 5px;
   }
 
   .welcome-card-icon {
-    width: 33px;
-    height: 33px;
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
+    font-size: 16px;
   }
 
-  .welcome-card strong {
-    font-size: 12.5px;
-  }
+  .welcome-card strong { font-size: 14px; }
+  .welcome-card-description { font-size: 9.5px; line-height: 1.55; }
+  .welcome-card-arrow { width: 25px; height: 25px; left: 9px; bottom: 8px; font-size: 18px; }
+  .welcome-note { margin-top: 15px; font-size: 10px; }
 
-  .welcome-card small {
-    font-size: 8.2px;
-  }
-
-  .welcome-status {
+  .chat-mode-banner {
+    width: calc(100% - 20px);
     margin-top: 8px;
-    font-size: 9px;
-  }
-}
-
-
-
-/* ============================================================
-   Final theme + mobile topbar correction
-   Only CSS: keeps all existing HTML/JS behavior unchanged.
-   ============================================================ */
-
-/* Shared page colors: Light */
-html:not(.dark) {
-  --zhir-bg: #f5f8ff;
-  --zhir-bg-2: #edf3ff;
-  --zhir-panel: rgba(255, 255, 255, .82);
-  --zhir-line: rgba(63, 112, 205, .22);
-  --zhir-text: #1f2937;
-  --zhir-muted: #66738b;
-  --app-canvas: #f7f9fd;
-  --app-panel: #ffffff;
-  --app-control: #eef3fb;
-  --app-border: #d9e2f0;
-  --app-border-hover: #b9c9e1;
-  --app-subtle: #65738b;
-}
-
-/* Shared page colors: Dark */
-html.dark {
-  --zhir-bg: #06122e;
-  --zhir-bg-2: #0b1838;
-  --zhir-panel: rgba(12, 29, 66, .78);
-  --zhir-line: rgba(87, 163, 255, .34);
-  --zhir-text: #f5f7ff;
-  --zhir-muted: #9aaed0;
-  --app-canvas: #0b1530;
-  --app-panel: #101d3c;
-  --app-control: #17284d;
-  --app-border: rgba(104, 151, 235, .25);
-  --app-border-hover: rgba(125, 169, 245, .48);
-  --app-subtle: #a9b9d5;
-}
-
-/* The complete page follows the selected theme. */
-html:not(.dark) body,
-html:not(.dark) .app-layout,
-html:not(.dark) .main-content,
-html:not(.dark) .chat-container {
-  background:
-    radial-gradient(circle at 50% 30%, rgba(91, 142, 255, .10), transparent 30%),
-    radial-gradient(circle at 82% 78%, rgba(168, 91, 255, .08), transparent 28%),
-    var(--zhir-bg) !important;
-  color: var(--zhir-text) !important;
-}
-
-html.dark body,
-html.dark .app-layout,
-html.dark .main-content,
-html.dark .chat-container {
-  background:
-    radial-gradient(circle at 50% 33%, rgba(37, 83, 170, .18), transparent 30%),
-    radial-gradient(circle at 80% 78%, rgba(133, 41, 221, .16), transparent 30%),
-    var(--zhir-bg) !important;
-  color: var(--zhir-text) !important;
-}
-
-/* Sidebar, dialogs and common panels use the same theme tokens. */
-.sidebar,
-.profile-dialog,
-.api-key-dialog,
-.upgrade-dialog,
-.plan-menu {
-  background: var(--app-panel) !important;
-  color: var(--ink) !important;
-  border-color: var(--app-border) !important;
-}
-
-.sidebar-footer,
-.brand-header {
-  border-color: var(--app-border) !important;
-}
-
-.history-search,
-.new-chat-btn,
-.profile-summary,
-.profile-field input,
-.payment-method,
-.upgrade-plan-card,
-.plan-detail-card {
-  background: var(--app-control) !important;
-  color: var(--ink) !important;
-  border-color: var(--app-border) !important;
-}
-
-.history-search input,
-.profile-field input,
-.plan-option,
-.plan-option strong,
-.plan-option small {
-  color: var(--ink) !important;
-}
-
-/* Light-mode welcome area: no dark cards/backgrounds remain. */
-html:not(.dark) .top-brand-title,
-html:not(.dark) .welcome-copy h1,
-html:not(.dark) .welcome-card strong {
-  color: var(--ink) !important;
-}
-
-html:not(.dark) .top-brand-mark {
-  background: linear-gradient(145deg, #eaf1ff, #dbe6fb) !important;
-  border-color: rgba(70, 116, 204, .28) !important;
-  box-shadow: 0 0 24px rgba(75, 107, 255, .12), inset 0 0 18px rgba(77, 124, 255, .10) !important;
-}
-
-html:not(.dark) .plan-trigger {
-  background: rgba(255, 255, 255, .92) !important;
-  color: var(--ink) !important;
-  border-color: rgba(78, 144, 255, .34) !important;
-  box-shadow: 0 6px 22px rgba(48, 84, 150, .10) !important;
-}
-
-html:not(.dark) .plan-menu {
-  background: rgba(255, 255, 255, .98) !important;
-  box-shadow: 0 20px 55px rgba(34, 58, 96, .16), 0 0 30px rgba(48, 108, 255, .07) !important;
-}
-
-html:not(.dark) .plan-option:hover,
-html:not(.dark) .plan-option.selected {
-  background: var(--app-control) !important;
-}
-
-html:not(.dark) .menu-btn {
-  background: rgba(255, 255, 255, .90) !important;
-  color: var(--ink) !important;
-  border-color: rgba(76, 136, 242, .28) !important;
-  box-shadow: 0 6px 18px rgba(37, 103, 235, .08) !important;
-}
-
-html.dark .header-theme-toggle {
-  background: linear-gradient(120deg, rgba(19, 31, 60, .98), rgba(27, 42, 78, .98)) !important;
-  color: #b9c8e2 !important;
-  border-color: rgba(95, 120, 169, .32) !important;
-}
-
-html:not(.dark) .welcome-float {
-  background: linear-gradient(145deg, rgba(231, 240, 255, .96), rgba(210, 224, 248, .94)) !important;
-  border-color: rgba(78, 129, 235, .34) !important;
-  box-shadow: 0 8px 28px rgba(42, 110, 220, .14), inset 0 0 20px rgba(255,255,255,.65) !important;
-}
-
-html:not(.dark) .welcome-card {
-  background: linear-gradient(145deg, rgba(255,255,255,.96), rgba(234,241,252,.96)) !important;
-  color: var(--ink) !important;
-  border-color: rgba(67, 131, 238, .34) !important;
-  box-shadow: inset 0 0 22px rgba(45, 91, 171, .05), 0 10px 25px rgba(44, 75, 130, .08) !important;
-}
-
-html:not(.dark) .welcome-card small,
-html:not(.dark) .welcome-copy p,
-html:not(.dark) .welcome-status {
-  color: var(--muted) !important;
-}
-
-html:not(.dark) .card-arrow {
-  background: rgba(62, 112, 211, .12) !important;
-  color: #315da8 !important;
-}
-
-html:not(.dark) .composer-box {
-  background: rgba(255, 255, 255, .94) !important;
-  border-color: var(--app-border) !important;
-  color: var(--ink) !important;
-  box-shadow: 0 10px 32px rgba(44, 75, 130, .12), inset 0 0 18px rgba(91, 142, 255, .05) !important;
-}
-
-html.dark .composer-box {
-  background: rgba(16, 29, 60, .94) !important;
-  border-color: var(--app-border) !important;
-  color: var(--ink) !important;
-}
-
-/* Mobile: real flex layout, no absolute left/right positioning. */
-@media (max-width: 768px) {
-  .topbar {
-    position: relative !important;
-    display: flex !important;
-    flex-direction: row !important;
-    direction: rtl !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    gap: 8px !important;
-    width: 100% !important;
-    height: 64px !important;
-    min-height: 64px !important;
-    padding: 8px 10px !important;
+    padding: 9px 11px;
+    border-radius: 13px;
   }
 
-  .topbar .menu-btn {
-    position: static !important;
-    inset: auto !important;
-    right: auto !important;
-    left: auto !important;
-    top: auto !important;
-    order: 1 !important;
-    flex: 0 0 44px !important;
-    width: 44px !important;
-    height: 44px !important;
-    margin: 0 !important;
-  }
-
-  .topbar .top-brand {
-    position: static !important;
-    inset: auto !important;
-    right: auto !important;
-    left: auto !important;
-    top: auto !important;
-    order: 2 !important;
-    flex: 0 0 auto !important;
-    margin: 0 !important;
-  }
-
-  .topbar .plan-switcher {
-    position: static !important;
-    inset: auto !important;
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-    transform: none !important;
-    order: 3 !important;
-    flex: 1 1 auto !important;
-    min-width: 0 !important;
-    display: flex !important;
-    justify-content: center !important;
-    margin: 0 !important;
-  }
-
-  .topbar .header-theme-toggle {
-    position: static !important;
-    inset: auto !important;
-    right: auto !important;
-    left: auto !important;
-    top: auto !important;
-    order: 4 !important;
-    flex: 0 0 86px !important;
-    width: 86px !important;
-    height: 44px !important;
-    margin: 0 !important;
-  }
-
-  .top-brand-mark {
-    width: 44px !important;
-    height: 44px !important;
-    border-radius: 14px !important;
-  }
-
-  .top-brand-title {
-    font-size: 26px !important;
-  }
-
-  .plan-trigger {
-    width: min(168px, 100%) !important;
-    height: 44px !important;
-    font-size: 16px !important;
-    gap: 10px !important;
-  }
-
-  .plan-trigger-chevron {
-    width: 30px !important;
-    height: 30px !important;
-  }
-}
-
-@media (max-width: 430px) {
-  .topbar {
-    gap: 6px !important;
-    padding-inline: 8px !important;
-  }
-
-  .topbar .menu-btn {
-    flex-basis: 40px !important;
-    width: 40px !important;
-    height: 40px !important;
-    border-radius: 13px !important;
-  }
-
-  .topbar .header-theme-toggle {
-    flex-basis: 74px !important;
-    width: 74px !important;
-    height: 40px !important;
-    padding-inline: 6px !important;
-  }
-
-  .topbar .top-brand-mark {
-    width: 40px !important;
-    height: 40px !important;
-  }
-
-  .topbar .top-brand-title {
-    display: none !important;
-  }
-
-  .topbar .plan-trigger {
-    width: min(150px, 100%) !important;
-    height: 40px !important;
-    font-size: 15px !important;
-    gap: 7px !important;
-  }
-
-  .topbar .plan-trigger-chevron {
-    width: 27px !important;
-    height: 27px !important;
-  }
-
-  .header-theme-toggle .theme-moon,
-  .header-theme-toggle .theme-sun {
-    font-size: 19px !important;
-  }
-
-  .header-theme-toggle .theme-orb {
-    width: 28px !important;
-    height: 31px !important;
-  }
+  .chat-mode-banner strong { font-size: 12px; }
+  .chat-mode-banner span { font-size: 9px; }
 }

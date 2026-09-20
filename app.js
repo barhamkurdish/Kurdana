@@ -35,6 +35,65 @@ const root = document.documentElement;
     const { PLAN_CONFIG, KEYS, activePlan, loadCredits, saveCredits, getHistory, addHistory: persistHistory, getCurrentMessages, appendCurrentMessage, clearCurrentMessages } = window.ZHIR_STORAGE;
     const activeResponseProfile = () => PLAN_CONFIG[activePlan()] || PLAN_CONFIG['ژیر Lite'];
 
+    /* =======================================================
+       WELCOME MODES — six focused chat entry points
+       ======================================================= */
+    const WELCOME_MODES = Object.freeze({
+      translate: { title: 'وەرگێڕان', description: 'دەقەکەت بۆ زمانێکی تر وەرگێڕە.', placeholder: 'دەقی دەتەوێت وەرگێڕدرێت بنووسە...' },
+      summarize: { title: 'کورتکردنەوە', description: 'دەقی درێژ بکە بە پوختە و خاڵە سەرەکییەکان.', placeholder: 'دەقەکە بۆ کورتکردنەوە بنووسە...' },
+      code: { title: 'نووسینی کۆد', description: 'کۆدی پاک و سادە بۆت ئامادە بکە.', placeholder: 'ئەو کۆدە یان داواکارییە بنووسە...' },
+      knowledge: { title: 'زانین', description: 'پرسیارەکانت بە ڕوونی و وردی وەڵام بدە.', placeholder: 'پرسیارەکەت بنووسە...' },
+      insight: { title: 'سەرنج', description: 'بیرۆکە و پێشنیار بۆ هەموو بوارەکان.', placeholder: 'بیرۆکە یان کێشەکەت بنووسە...' },
+      writing: { title: 'دارشتن', description: 'نامە و دەق و بیرۆکەکانت ڕێکبخە.', placeholder: 'ئەو دەقەی دەتەوێت دابڕێژرێت بنووسە...' }
+    });
+    let activeWelcomeMode = null;
+
+    function buildWelcomeCards() {
+      if (!welcomeBox || welcomeBox.querySelector('.welcome-cards')) return;
+      const cards = document.createElement('div');
+      cards.className = 'welcome-cards';
+      cards.setAttribute('aria-label', 'شێوازەکانی ژیر');
+      const icons = {
+        translate: '↔', summarize: '≡', code: '</>', knowledge: '✧', insight: '✦', writing: '✎'
+      };
+      Object.entries(WELCOME_MODES).forEach(([mode, data]) => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = `welcome-card welcome-card-${mode}`;
+        card.dataset.welcomeMode = mode;
+        card.innerHTML = `<span class="welcome-card-icon" aria-hidden="true">${icons[mode]}</span><strong>${data.title}</strong><span class="welcome-card-description">${data.description}</span><span class="welcome-card-arrow" aria-hidden="true">‹</span>`;
+        cards.appendChild(card);
+      });
+      welcomeBox.appendChild(cards);
+      const note = document.createElement('div');
+      note.className = 'welcome-note';
+      note.innerHTML = '<span aria-hidden="true">✦</span> ژیر · بە پشتگیری تەکنەلۆژیای AI';
+      welcomeBox.appendChild(note);
+      cards.querySelectorAll('[data-welcome-mode]').forEach((card) => {
+        card.addEventListener('click', () => openWelcomeMode(card.dataset.welcomeMode));
+      });
+    }
+
+    function openWelcomeMode(mode) {
+      const selected = WELCOME_MODES[mode];
+      if (!selected) return;
+      activeWelcomeMode = mode;
+      messagesStream.innerHTML = '';
+      clearCurrentMessages();
+      welcomeBox.style.display = 'none';
+      userInput.value = '';
+      userInput.placeholder = selected.placeholder;
+      userInput.style.height = '24px';
+      userInput.focus({ preventScroll: true });
+      const banner = document.createElement('div');
+      banner.className = 'chat-mode-banner';
+      banner.innerHTML = `<strong>مۆدی ${selected.title}</strong><span>${selected.description}</span>`;
+      messagesStream.appendChild(banner);
+      streamAssistantMessage(`بەخێربێیت بۆ مۆدی ${selected.title}. ${selected.description} ئێستا دەقی خۆت بنووسە.`, activeResponseProfile());
+    }
+
+    buildWelcomeCards();
+
     const renderCredits = () => {
       const data = loadCredits();
       creditValue.textContent = data.dailyBalance.toLocaleString('en-US');
@@ -114,7 +173,7 @@ const root = document.documentElement;
     checkoutPay.addEventListener('click', () => { if (!checkoutSelectedPlan) return; const method = selectedPaymentMethod(); const required = method === 'card' ? [document.getElementById('cardholderName'), document.getElementById('cardNumber'), document.getElementById('cardExpiry'), document.getElementById('cardCvv')] : [document.getElementById(method === 'fastpay' ? 'fastpayNumber' : 'fibNumber')]; const missing = required.some((field) => !field.value.trim()); if (missing) { showCreditToast('تکایە خانەکانی پارەدانی دێمۆ پڕ بکەرەوە'); required.find((field) => !field.value.trim())?.focus(); return; } checkoutPay.disabled = true; checkoutPay.textContent = 'لە پشکنین‌دایە...'; setTimeout(() => { setActivePlan(checkoutSelectedPlan); planTrigger.querySelector('span:last-child').textContent = checkoutSelectedPlan; document.querySelectorAll('.plan-option').forEach((item) => { const selected = item.dataset.plan === checkoutSelectedPlan; item.classList.toggle('selected', selected); item.setAttribute('aria-checked', String(selected)); }); checkoutModal.classList.remove('open'); showCreditToast(`پیرۆزە — ${checkoutSelectedPlan} لە دێمۆدا چالاک کرا`); }, 900); });
     document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeUpgradeModals(); });
 
-    if (localStorage.getItem(KEYS.theme) !== 'light') root.classList.add('dark');
+    if (localStorage.getItem(KEYS.theme) === 'dark') root.classList.add('dark');
     themeBtn.addEventListener('click', () => {
       root.classList.toggle('dark');
       localStorage.setItem(KEYS.theme, root.classList.contains('dark') ? 'dark' : 'light');
@@ -190,31 +249,7 @@ const root = document.documentElement;
       refreshProfilePreview();
       closeProfile();
     });
-    const apiKeyModal = document.getElementById('apiKeyModal');
-    const apiKeyClose = document.getElementById('apiKeyClose');
-    const apiKeyInput = document.getElementById('apiKeyInput');
-    const apiKeySave = document.getElementById('apiKeySave');
-    const apiKeyClear = document.getElementById('apiKeyClear');
-    const closeApiKeyModal = () => apiKeyModal.classList.remove('open');
-    settingsBtn.addEventListener('click', () => {
-      apiKeyInput.value = window.ZHIR_AI.getApiKey();
-      apiKeyModal.classList.add('open');
-      apiKeyInput.focus();
-    });
-    apiKeyClose.addEventListener('click', closeApiKeyModal);
-    apiKeyModal.addEventListener('click', (event) => { if (event.target === apiKeyModal) closeApiKeyModal(); });
-    apiKeySave.addEventListener('click', () => {
-      const key = apiKeyInput.value.trim();
-      if (!key) { showCreditToast('تکایە کلیلەکە بنووسە'); apiKeyInput.focus(); return; }
-      window.ZHIR_AI.saveApiKey(key);
-      closeApiKeyModal();
-      showCreditToast('Gemini API Key پاشەکەوت کرا');
-    });
-    apiKeyClear.addEventListener('click', () => {
-      window.ZHIR_AI.clearApiKey();
-      apiKeyInput.value = '';
-      showCreditToast('Gemini API Key سڕایەوە');
-    });
+    settingsBtn.addEventListener('click', () => { themeBtn.click(); showCreditToast(root.classList.contains('dark') ? 'ڕێکخستن: دۆخی تاریک چالاک کرا' : 'ڕێکخستن: دۆخی ڕووناک چالاک کرا'); });
 
     function toggleMenu(open) { sidebar.classList.toggle('open', open); }
     menuBtn.addEventListener('click', () => toggleMenu(true));
@@ -372,35 +407,10 @@ const root = document.documentElement;
     newChatBtn.addEventListener('click', () => {
       messagesStream.innerHTML = '';
       welcomeBox.style.display = 'block';
+      activeWelcomeMode = null;
+      userInput.value = '';
+      userInput.placeholder = 'پرسیارێک لە ژیر بکە...';
+      userInput.style.height = '24px';
       toggleMenu(false);
       clearCurrentMessages();
-    });
-
-    // پێشنیارەکانی پەڕەی سەرەتا: کرتە لەسەر هەر کارتێک پرسیارەکە دەخاتە ناو خانەی چات.
-    document.querySelectorAll('.welcome-card[data-prompt]').forEach((card) => {
-      card.addEventListener('click', () => {
-        userInput.value = card.dataset.prompt || '';
-        userInput.dispatchEvent(new Event('input', { bubbles: true }));
-        userInput.focus({ preventScroll: true });
-      });
-    });
-
-    // ناوبەری خوارەوە بە کارە واقعییەکانی پڕۆژە دەبەسترێت.
-    document.querySelectorAll('.bottom-nav-item').forEach((item) => {
-      item.addEventListener('click', () => {
-        const nav = item.dataset.nav;
-        document.querySelectorAll('.bottom-nav-item').forEach((button) => button.classList.toggle('active', button === item));
-        if (nav === 'home') {
-          messagesStream.innerHTML = '';
-          welcomeBox.style.display = '';
-          clearCurrentMessages();
-          chatContainer.scrollTop = 0;
-        } else if (nav === 'history') {
-          toggleMenu(true);
-        } else if (nav === 'settings') {
-          settingsBtn.click();
-        } else if (nav === 'favorites') {
-          showCreditToast('دڵخوازەکان لە وەشانی داهاتوودا بەردەست دەبن');
-        }
-      });
     });

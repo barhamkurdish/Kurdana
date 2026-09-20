@@ -7,23 +7,28 @@
   "use strict";
 
   /*
-   * کلیلەی Gemini لەم فایلەدا دانانرێت.
-   * کلیل لە سێرڤەرەکەدا هەڵدەگیرێت و لە ڕێگەی /api/gemini بەکاردێت.
+   * =======================================================
+   * 1) تەنها لێرە کلیلی Gemini دابنێ
+   * =======================================================
+   *
+   * نموونە:
+   * const GEMINI_API_KEY = "AIza....";
+   *
+   * کلیلی ڕاستەقینەکەت لە نێوان هەمان هێڵەی خوارەوە دابنێ.
+   * =======================================================
+   */
+  const GEMINI_API_KEY = "Ab8RN6IWRfb92PWlqGGwBlMHlPzjN8x37X3P_IDP15HEEBrLCw";
+
+  /*
+   * Gemini 3.6 Flash
+   * ئەم مۆدێلە بۆ generateContent بەکاردێت.
    */
   const GEMINI_MODEL = "gemini-3.6-flash";
+
   const GEMINI_ENDPOINT =
     "https://generativelanguage.googleapis.com/v1beta/models/" +
     encodeURIComponent(GEMINI_MODEL) +
     ":generateContent";
-  const API_KEY_STORAGE = "zhir_gemini_api_key";
-
-  function getApiKey() {
-    try {
-      return String(localStorage.getItem(API_KEY_STORAGE) || "").trim();
-    } catch (_) {
-      return "";
-    }
-  }
 
   const ZHIR_SYSTEM_PROMPT = Object.freeze(
     `تۆ «ژیر»یت؛ یاریدەدەری ژیریی دەستکردێکی زانا، ڕاستگۆ، هاوسۆز و پیشەیی، بە ناوی Manus. ئەرکی سەرەکیت ئەوەیە مەبەستی ڕاستەقینەی بەکارهێنەر تێبگەیت و وەڵامێکی ڕوون، قووڵ، دروست و گونجاو پێشکەش بکەیت.
@@ -88,10 +93,17 @@
 
         if (!text) return null;
 
-        return { role: role, text: text };
+        return {
+          role: role,
+          parts: [{ text: text }]
+        };
       })
       .filter(Boolean);
 
+    /*
+     * Gemini 3.6 generateContent نابێت بە model turn کۆتایی بێت.
+     * ئەگەر history بە model کۆتایی هاتبێت، لای دەبەین.
+     */
     while (
       normalized.length &&
       normalized[normalized.length - 1].role === "model"
@@ -102,24 +114,70 @@
     return normalized;
   }
 
+  function extractText(data) {
+    const candidates =
+      data &&
+      Array.isArray(data.candidates)
+        ? data.candidates
+        : [];
+
+    for (const candidate of candidates) {
+      const parts =
+        candidate &&
+        candidate.content &&
+        Array.isArray(candidate.content.parts)
+          ? candidate.content.parts
+          : [];
+
+      const text = parts
+        .map(function (part) {
+          return part && typeof part.text === "string"
+            ? part.text
+            : "";
+        })
+        .join("\n")
+        .trim();
+
+      if (text) return text;
+    }
+
+    return "";
+  }
+
+  function apiErrorMessage(data, status) {
+    if (
+      data &&
+      data.error &&
+      typeof data.error.message === "string"
+    ) {
+      return data.error.message;
+    }
+
+    return "Gemini API HTTP " + String(status || "error");
+  }
+
   async function sendMessage(messages) {
+    if (
+      !GEMINI_API_KEY ||
+      GEMINI_API_KEY === "PASTE_YOUR_GEMINI_API_KEY_HERE"
+    ) {
+      throw new Error(
+        "کلیلی Gemini لە ai.js دانەنراوە. لە سەرەتای فایلەکە GEMINI_API_KEY پڕبکەرەوە."
+      );
+    }
+
     const contents = normalizeMessages(messages);
 
     if (!contents.length) {
       throw new Error("هیچ نامەیەکی دروست بۆ Gemini نەنێردراوە.");
     }
 
-    const apiKey = getApiKey();
-    if (!apiKey) {
-      throw new Error("تکایە سەرەتا Gemini API Key لە ڕێکخستنەکان دابنێ.");
-    }
-
-    const requestContents = contents.map(function (message) {
-      return {
-        role: message.role,
-        parts: [{ text: message.text }]
-      };
-    });
+    const payload = {
+      system_instruction: {
+        parts: [{ text: ZHIR_SYSTEM_PROMPT }]
+      },
+      contents: contents
+    };
 
     let response;
 
@@ -128,16 +186,13 @@
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-goog-api-key": apiKey
+          "x-goog-api-key": GEMINI_API_KEY
         },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: ZHIR_SYSTEM_PROMPT }] },
-          contents: requestContents
-        })
+        body: JSON.stringify(payload)
       });
-    } catch (_) {
+    } catch (networkError) {
       throw new Error(
-        "پەیوەندی بە سێرڤەری ژیر نەکرا. پەیوەندی ئینتەرنێت و ڕێکخستنی سێرڤەر پشکنە."
+        "پەیوەندی بە Gemini API نەکرا. ئینتەرنێت و ڕێکخستنی API پشکنە."
       );
     }
 
@@ -150,34 +205,22 @@
     }
 
     if (!response.ok) {
+      throw new Error(apiErrorMessage(data, response.status));
+    }
+
+    const text = extractText(data);
+
+    if (!text) {
       throw new Error(
-        data && typeof data.error === "string"
-          ? data.error
-          : "سێرڤەری ژیر وەڵامی دروستی نەدا. HTTP " + String(response.status)
+        "Gemini هیچ وەڵامێکی دەقی نەگەڕاندەوە."
       );
     }
 
-    const responseText =
-      data && Array.isArray(data.candidates) && data.candidates[0] &&
-      data.candidates[0].content && Array.isArray(data.candidates[0].content.parts)
-        ? data.candidates[0].content.parts
-            .map(function (part) { return part && typeof part.text === "string" ? part.text : ""; })
-            .join("\n")
-            .trim()
-        : "";
-
-    if (!responseText) {
-      throw new Error("Gemini هیچ وەڵامێکی دەقی نەگەڕاندەوە.");
-    }
-
-    return responseText;
+    return text;
   }
 
   window.ZHIR_AI = Object.freeze({
     model: GEMINI_MODEL,
-    sendMessage: sendMessage,
-    getApiKey: getApiKey,
-    saveApiKey: function (key) { localStorage.setItem(API_KEY_STORAGE, String(key || "").trim()); },
-    clearApiKey: function () { localStorage.removeItem(API_KEY_STORAGE); }
+    sendMessage: sendMessage
   });
 })();
