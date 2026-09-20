@@ -1083,7 +1083,6 @@ html.dark .chat-container { scrollbar-color: rgba(91, 145, 255, .45) transparent
 .welcome-status b { color: #9eaecc; font-weight: 700; }
 .welcome-status i { color: #b466ff; font-style: normal; margin-inline-start: 5px; }
 
-.bottom-nav { display: none; }
 
 html:not(.dark) .main-content,
 html:not(.dark) .chat-container,
@@ -1125,12 +1124,6 @@ html:not(.dark) .top-brand-title { color: #202124; }
   html.dark .composer-box textarea#userInput::placeholder { color: #7f95ba !important; }
   html.dark .composer-box .action-btn { color: #c2d1ed !important; }
   html.dark .composer-box .send-btn { background: linear-gradient(145deg, #8d4cff, #b24cff) !important; color: #fff !important; box-shadow: 0 0 20px rgba(165, 75, 255, .32); }
-  .bottom-nav { height: 78px; display: flex; direction: ltr; align-items: stretch; justify-content: space-around; padding: 6px 7px max(7px, env(safe-area-inset-bottom)); background: rgba(4, 16, 42, .97); border-top: 1px solid rgba(66, 127, 232, .30); box-shadow: 0 -10px 30px rgba(0,0,0,.22); z-index: 60; }
-  .bottom-nav-item { flex: 1; max-width: 130px; border: 0; background: transparent; color: #8da5cf; font: inherit; font-size: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; position: relative; cursor: pointer; }
-  .bottom-nav-icon { width: 30px; height: 30px; display: grid; place-items: center; }
-  .bottom-nav-icon svg { width: 25px; height: 25px; }
-  .bottom-nav-item.active { color: #b47aff; }
-  .bottom-nav-item.active::after { content: ''; position: absolute; left: 16px; right: 16px; bottom: 0; height: 3px; border-radius: 4px; background: linear-gradient(90deg, #6e58ff, #b454ff); box-shadow: 0 0 12px rgba(164, 79, 255, .55); }
 }
 
 @media (max-width: 430px) {
@@ -1150,3 +1143,240 @@ html:not(.dark) .top-brand-title { color: #202124; }
   .welcome-card strong { font-size: 15px; }
   .welcome-card small { font-size: 9.8px; }
 }
+
+/* Mobile compact welcome screen: no bottom navigation, no extra dead space. */
+@media (max-width: 768px) {
+  .chat-container {
+    padding: 0 12px 8px !important;
+  }
+
+  .welcome-box {
+    width: 100%;
+    padding: 0 0 4px;
+  }
+
+  .welcome-orbit {
+    width: 100%;
+    height: 176px;
+    margin: -2px auto 0;
+  }
+
+  .welcome-core {
+    top: 34px;
+    width: 150px;
+    height: 150px;
+    padding: 12px;
+    border-radius: 36px;
+  }
+
+  .welcome-core-inner {
+    border-radius: 27px;
+  }
+
+  .welcome-peace {
+    width: 88px;
+    height: 88px;
+    border-radius: 25px;
+    font-size: 54px;
+  }
+
+  .welcome-float {
+    width: 58px;
+    height: 58px;
+    border-radius: 17px;
+  }
+
+  .welcome-float svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .welcome-float-chat { left: 5%; top: 23%; }
+  .welcome-float-code { right: 5%; top: 25%; }
+  .welcome-float-brain { left: 5%; bottom: 3%; }
+  .welcome-float-bulb { right: 5%; bottom: 1%; }
+
+  .welcome-copy {
+    margin: 0 auto 10px;
+    max-width: 100%;
+  }
+
+  .welcome-copy h1 {
+    margin-bottom: 4px !important;
+    font-size: 22px !important;
+    line-height: 1.3 !important;
+    letter-spacing: -.5px;
+  }
+
+  .welcome-copy p {
+    padding: 0 4px;
+    font-size: 10.5px;
+    line-height: 1.55;
+  }
+
+  .welcome-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .welcome-card {
+    min-height: 108px;
+    padding: 9px 8px 8px;
+    border-radius: 15px;
+  }
+
+  .welcome-card-icon {
+    width: 35px;
+    height: 35px;
+    margin-bottom: 6px;
+    border-radius: 11px;
+  }
+
+  .welcome-card-icon svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .welcome-card strong {
+    font-size: 13px;
+    margin-bottom: 2px;
+  }
+
+  .welcome-card small {
+    max-width: 100%;
+    font-size: 8.5px;
+    line-height: 1.45;
+  }
+
+  .card-arrow {
+    left: 6px;
+    bottom: 6px;
+    width: 26px;
+    height: 26px;
+    font-size: 20px;
+  }
+
+  .welcome-status {
+    margin-top: 9px;
+    font-size: 9.5px;
+  }
+
+  .composer-container {
+    position: fixed !important;
+    left: 10px !important;
+    right: 10px !important;
+    bottom: max(8px, env(safe-area-inset-bottom)) !important;
+    width: auto !important;
+    margin: 0 !important;
+    z-index: 50 !important;
+  }
+
+  .composer-box {
+    min-height: 54px !important;
+    height: 54px !important;
+    max-height: 54px !important;
+    padding: 7px 9px !important;
+    border-radius: 19px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .topbar {
+    height: 64px !important;
+    min-height: 64px !important;
+    padding: 8px 10px !important;
+  }
+
+  .top-brand {
+    left: 10px !important;
+    top: 8px !important;
+  }
+
+  .top-brand-mark {
+    width: 44px;
+    height: 44px;
+  }
+
+  .plan-trigger {
+    width: 168px !important;
+    height: 44px !important;
+    font-size: 16px !important;
+  }
+
+  .topbar .header-theme-toggle {
+    right: 60px;
+    top: 8px;
+    width: 86px;
+    height: 44px;
+  }
+
+  .topbar .menu-btn {
+    right: 8px;
+    top: 8px;
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 14px !important;
+  }
+
+  .welcome-orbit {
+    height: 162px;
+  }
+
+  .welcome-core {
+    top: 31px;
+    width: 135px;
+    height: 135px;
+    padding: 11px;
+    border-radius: 32px;
+  }
+
+  .welcome-peace {
+    width: 80px;
+    height: 80px;
+    border-radius: 23px;
+    font-size: 49px;
+  }
+
+  .welcome-float {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+  }
+
+  .welcome-float svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  .welcome-copy h1 {
+    font-size: 21px !important;
+  }
+
+  .welcome-copy p {
+    font-size: 10px;
+  }
+
+  .welcome-card {
+    min-height: 104px;
+    padding: 8px 7px 7px;
+  }
+
+  .welcome-card-icon {
+    width: 33px;
+    height: 33px;
+  }
+
+  .welcome-card strong {
+    font-size: 12.5px;
+  }
+
+  .welcome-card small {
+    font-size: 8.2px;
+  }
+
+  .welcome-status {
+    margin-top: 8px;
+    font-size: 9px;
+  }
+}
+
