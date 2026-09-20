@@ -1182,3 +1182,313 @@ html.dark .composer-box textarea#userInput:focus {
   .chat-mode-banner strong { font-size: 12px; }
   .chat-mode-banner span { font-size: 9px; }
 }
+
+/* =======================================================
+   FINAL GLOBAL DARK / LIGHT THEME CONSISTENCY
+   Only theme colors are normalized here. Layout and effects stay unchanged.
+   ======================================================= */
+:root {
+  --zhir-card-text: var(--ink);
+  --app-canvas: var(--bg);
+  --app-panel: var(--surface);
+  --app-control: var(--user-bubble);
+  --app-border: var(--line);
+  --app-border-hover: var(--line-strong);
+  --app-subtle: var(--muted);
+  color-scheme: light;
+}
+
+html.dark {
+  --zhir-card-text: var(--ink);
+  --app-canvas: var(--bg);
+  --app-panel: var(--surface);
+  --app-control: var(--user-bubble);
+  --app-border: var(--line);
+  --app-border-hover: var(--line-strong);
+  --app-subtle: var(--muted);
+  color-scheme: dark;
+}
+
+html,
+body,
+.app-layout,
+.main-content,
+.chat-container {
+  background: var(--bg) !important;
+  color: var(--ink) !important;
+}
+
+.sidebar {
+  background: var(--surface) !important;
+  color: var(--ink) !important;
+  border-color: var(--line) !important;
+}
+
+.brand-header,
+.sidebar-footer {
+  border-color: var(--line) !important;
+}
+
+.menu-section-title,
+.footer-caption,
+.useful-note,
+.profile-kicker,
+.upgrade-kicker,
+.payment-method-subtitle,
+.welcome-card-description,
+.welcome-note,
+.thinking-text {
+  color: var(--muted) !important;
+}
+
+.new-chat-btn,
+.history-search,
+.settings-theme,
+.profile-btn,
+.plan-trigger,
+.plan-option,
+.upgrade-close,
+.profile-close,
+.profile-cancel,
+.upgrade-badge,
+.plan-detail-credits span,
+.checkout-note,
+.response-tier,
+.payment-method-check {
+  background: var(--user-bubble) !important;
+  color: var(--ink) !important;
+  border-color: var(--line) !important;
+}
+
+.new-chat-btn:hover,
+.history-search:focus-within,
+.settings-theme:hover,
+.profile-btn:hover,
+.plan-trigger:hover,
+.plan-switcher.open .plan-trigger,
+.upgrade-close:hover,
+.profile-close:hover,
+.profile-cancel:hover {
+  background: var(--surface) !important;
+  color: var(--ink) !important;
+  border-color: var(--line-strong) !important;
+}
+
+.upgrade-modal,
+.profile-modal {
+  background: color-mix(in srgb, var(--bg) 38%, rgba(0,0,0,.55)) !important;
+}
+
+.upgrade-dialog,
+.profile-dialog,
+.upgrade-plan-card,
+.plan-detail-card,
+.payment-method,
+.profile-summary,
+.profile-field input,
+.demo-payment-fields input,
+.demo-qr-svg,
+.credit-toast,
+.api-key-dialog,
+.api-key-modal {
+  background: var(--surface) !important;
+  color: var(--ink) !important;
+  border-color: var(--line) !important;
+}
+
+.upgrade-plan-card p,
+.plan-detail-card p,
+.upgrade-features,
+.payment-method small,
+.demo-payment-fields label,
+.demo-qr-placeholder,
+.profile-field,
+.profile-summary span,
+.profile-kicker,
+.upgrade-kicker {
+  color: var(--muted) !important;
+}
+
+.upgrade-cta,
+.checkout-pay,
+.profile-save,
+.payment-method.selected .payment-method-icon,
+.upgrade-plan-title .brand-mark {
+  background: var(--ink) !important;
+  color: var(--bg) !important;
+}
+
+.payment-method.selected,
+.payment-method:hover,
+.plan-detail-card:hover,
+.plan-detail-card.selected,
+.upgrade-plan-card.featured {
+  background: var(--surface) !important;
+  border-color: var(--line-strong) !important;
+}
+
+.profile-avatar {
+  background: var(--ink) !important;
+  color: var(--bg) !important;
+}
+
+.welcome-card {
+  background: color-mix(in srgb, var(--surface) 94%, var(--user-bubble)) !important;
+  color: var(--zhir-card-text) !important;
+  border-color: var(--line-strong) !important;
+}
+
+.welcome-card strong,
+.welcome-card-icon,
+.welcome-card-arrow {
+  color: var(--zhir-card-text) !important;
+}
+
+.welcome-card-icon,
+.welcome-card-arrow {
+  background: var(--user-bubble) !important;
+  border-color: var(--line-strong) !important;
+}
+
+.welcome-card-description {
+  color: var(--muted) !important;
+}
+
+.chat-mode-banner {
+  background: color-mix(in srgb, var(--surface) 94%, var(--user-bubble)) !important;
+  color: var(--ink) !important;
+  border-color: var(--line) !important;
+}
+
+.chat-mode-banner span {
+  color: var(--muted) !important;
+}
+
+/* Composer: never switch to white text on a white box in Light mode,
+   and never switch to dark text on a dark box in Dark mode. */
+.composer-container {
+  background: transparent !important;
+  color: var(--ink) !important;
+}
+
+.composer-box,
+.composer-box:focus,
+.composer-box:focus-within {
+  background: var(--surface) !important;
+  color: var(--ink) !important;
+  border-color: var(--line-strong) !important;
+}
+
+.composer-box textarea#userInput,
+.composer-box textarea#userInput:focus {
+  background: transparent !important;
+  color: var(--ink) !important;
+  -webkit-text-fill-color: var(--ink) !important;
+  caret-color: var(--ink) !important;
+  outline: none !important;
+}
+
+.composer-box textarea#userInput::placeholder {
+  color: var(--muted) !important;
+  -webkit-text-fill-color: var(--muted) !important;
+  opacity: .9 !important;
+}
+
+.composer-box .action-btn,
+.composer-box .attach-btn,
+.composer-box .left-actions,
+.composer-box .mic-btn {
+  color: var(--muted) !important;
+}
+
+.composer-box .action-btn:hover,
+.composer-box .attach-btn:hover,
+.composer-box .mic-btn:hover {
+  background: var(--user-bubble) !important;
+  color: var(--ink) !important;
+}
+
+.composer-box .send-btn {
+  background: var(--ink) !important;
+  color: var(--bg) !important;
+}
+
+.composer-box .send-btn:hover {
+  background: var(--muted) !important;
+  color: var(--bg) !important;
+}
+
+.credit-logo,
+.credit-meter.low .credit-logo,
+.credit-meter.empty .credit-logo {
+  color: var(--ink) !important;
+  background: transparent !important;
+}
+
+html.dark .chat-container,
+html.dark .main-content,
+html.dark .app-layout,
+html.dark .sidebar,
+html.dark .welcome-card,
+html.dark .upgrade-dialog,
+html.dark .profile-dialog,
+html.dark .composer-box,
+html.dark .composer-box:focus,
+html.dark .composer-box:focus-within,
+html.dark .api-key-dialog,
+html.dark .api-key-modal {
+  background-color: var(--bg) !important;
+}
+
+html.dark .sidebar,
+html.dark .welcome-card,
+html.dark .upgrade-dialog,
+html.dark .profile-dialog,
+html.dark .composer-box,
+html.dark .composer-box:focus,
+html.dark .composer-box:focus-within,
+html.dark .api-key-dialog,
+html.dark .api-key-modal {
+  background: var(--surface) !important;
+}
+
+html.dark .welcome-card,
+html.dark .upgrade-dialog,
+html.dark .profile-dialog,
+html.dark .composer-box,
+html.dark .composer-box:focus,
+html.dark .composer-box:focus-within,
+html.dark .api-key-dialog,
+html.dark .api-key-modal {
+  color: var(--ink) !important;
+  border-color: var(--line) !important;
+}
+
+html.dark .welcome-card strong,
+html.dark .welcome-card-description,
+html.dark .upgrade-dialog,
+html.dark .profile-dialog,
+html.dark .composer-box textarea#userInput,
+html.dark .composer-box textarea#userInput:focus,
+html.dark .api-key-dialog,
+html.dark .api-key-modal {
+  color: var(--ink) !important;
+  -webkit-text-fill-color: var(--ink) !important;
+}
+
+@media (max-width: 768px) {
+  .composer-box,
+  .composer-box:focus,
+  .composer-box:focus-within {
+    background: var(--surface) !important;
+    color: var(--ink) !important;
+    border-color: var(--line-strong) !important;
+  }
+
+  .composer-box textarea#userInput,
+  .composer-box textarea#userInput:focus {
+    color: var(--ink) !important;
+    -webkit-text-fill-color: var(--ink) !important;
+    caret-color: var(--ink) !important;
+  }
+}
